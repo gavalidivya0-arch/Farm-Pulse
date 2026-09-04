@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Library & Recommendations - FarmPulse</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+  
+  <style>
+    .crop-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .crop-image {
+      height: 160px;
+      background-color: var(--color-accent-beige);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .crop-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .fav-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255,255,255,0.8);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #ccc;
+      transition: all 0.2s;
+    }
+    .fav-btn.active {
+      color: #ef4444;
+    }
+    .crop-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: var(--spacing-sm) 0;
+    }
+    .crop-desc {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      flex-grow: 1;
+      margin-bottom: var(--spacing-md);
+    }
+    
+    /* Recommendation Results */
+    .result-card {
+      display: flex;
+      gap: var(--spacing-md);
+      align-items: center;
+      padding: var(--spacing-md);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-md);
+      background-color: var(--color-surface);
+    }
+    .result-rank {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      width: 50px;
+      text-align: center;
+    }
+    .result-info { flex-grow: 1; }
+    .score-bar-bg {
+      width: 100%;
+      height: 8px;
+      background-color: var(--border-color);
+      border-radius: 4px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+    .score-bar-fill {
+      height: 100%;
+      background-color: var(--color-primary);
+    }
+    .tabs {
+      display: flex;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: var(--spacing-lg);
+    }
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+  </style>
+</head>
+<body>
+  
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo"><span>🌱</span> FarmPulse</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="crops.html" class="active">Crops</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="planner.html">Planner</a>
+        <a href="calculator.html">Calculator</a>
+      </div>
+      <div class="nav-actions">
+        <div class="location-badge">📍 <span>Detecting...</span></div>
+        <button class="theme-toggle">🌙</button>
+        <button class="mobile-menu-btn">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mb-xl mt-lg">
+    <header class="mb-lg">
+      <h1>Crop Intelligence</h1>
+      <p class="text-muted">Discover suitable crops and explore the comprehensive crop library.</p>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-target="recommend-tab">🎯 Smart Recommender</button>
+      <button class="tab-btn" data-target="library-tab">🌾 Crop Library</button>
+    </div>
+
+    <!-- RECOMMENDER TAB -->
+    <div id="recommend-tab" class="tab-content active">
+      <div class="grid grid-cols-2-sm gap-xl">
+        
+        <!-- Form -->
+        <div class="card">
+          <h3 class="mb-md">Find Suitable Crops</h3>
+          <form id="recommender-form">
+            <div class="form-group">
+              <label class="form-label">Growing Season</label>
+              <select class="form-select" id="rec-season" required>
+                <option value="">Select Season...</option>
+                <option value="Kharif">Kharif (Monsoon)</option>
+                <option value="Rabi">Rabi (Winter)</option>
+                <option value="Zaid">Zaid (Summer)</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Soil Type</label>
+              <select class="form-select" id="rec-soil" required>
+                <option value="">Select Soil...</option>
+                <option value="Black Soil">Black Soil</option>
+                <option value="Red Soil">Red Soil</option>
+                <option value="Sandy">Sandy</option>
+                <option value="Loamy">Loamy</option>
+                <option value="Clay">Clay</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Water Availability</label>
+              <select class="form-select" id="rec-water" required>
+                <option value="">Select Water Level...</option>
+                <option value="High">High (Abundant Irrigation/Rain)</option>
+                <option value="Medium">Medium (Moderate Irrigation)</option>
+                <option value="Low">Low (Rainfed / Dry)</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Average Temperature Expected (°C)</label>
+              <div class="flex items-center gap-sm">
+                <input type="range" id="rec-temp" min="5" max="45" value="25" class="form-control" style="width: 80%">
+                <span id="temp-val" style="font-weight: bold; width: 20%; text-align: right">25°C</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mt-md">Recommend Crops</button>
+          </form>
+        </div>
+        
+        <!-- Results -->
+        <div>
+          <h3 class="mb-md">Results</h3>
+          <div id="recommendation-results">
+            <div class="text-center text-muted" style="padding: 3rem 0; border: 1px dashed var(--border-color); border-radius: var(--radius-md);">
+              <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+              <p>Enter your farm conditions to see recommendations.</p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- LIBRARY TAB -->
+    <div id="library-tab" class="tab-content">
+      <div class="card mb-lg" style="background-color: var(--color-background);">
+        <div class="grid gap-md" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <input type="text" id="lib-search" class="form-control" placeholder="Search crops...">
+          <select id="lib-season" class="form-select">
+            <option value="">All Seasons</option>
+            <option value="Kharif">Kharif</option>
+            <option value="Rabi">Rabi</option>
+            <option value="Zaid">Zaid</option>
+          </select>
+          <select id="lib-water" class="form-select">
+            <option value="">All Water Req.</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="flex justify-between items-center mb-md">
+        <h3>Crop Database</h3>
+        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+          <input type="checkbox" id="show-favorites" style="accent-color: #ef4444;"> 
+          Show Favorites Only ♥
+        </label>
+      </div>
+      
+      <div id="crop-grid" class="grid gap-lg" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <!-- JS injects crops here -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script type="module" src="./js/app.js"></script>
+  <script type="module">
+    import { cropEngine } from './js/crops.js';
+    import storage from './js/storage.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await cropEngine.init();
+      
+      // Tabs logic
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+          
+          btn.classList.add('active');
+          document.getElementById(btn.dataset.target).classList.add('active');
+        });
+      });
+
+      // Temperature slider
+      const tempSlider = document.getElementById('rec-temp');
+      const tempVal = document.getElementById('temp-val');
+      tempSlider.addEventListener('input', (e) => {
+        tempVal.textContent = e.target.value + '°C';
+      });
+
+      // Form submission for recommendations
+      document.getElementById('recommender-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const inputs = {
+          season: document.getElementById('rec-season').value,
+          soilType: document.getElementById('rec-soil').value,
+          waterAvail: document.getElementById('rec-water').value,
+          avgTemp: document.getElementById('rec-temp').value
+        };
+        
+        const results = cropEngine.recommendCrops(inputs);
+        renderRecommendations(results);
+      });
+
+      // Library Filters
+      const searchInput = document.getElementById('lib-search');
+      const seasonSel = document.getElementById('lib-season');
+      const waterSel = document.getElementById('lib-water');
+      const favCheck = document.getElementById('show-favorites');
+      
+      const applyFilters = () => {
+        const filtered = cropEngine.filterLibrary(
+          searchInput.value, 
+          seasonSel.value, 
+          null, // skip soil in simple filter
+          waterSel.value
+        );
+        
+        if (favCheck.checked) {
+          const favs = storage.getFavorites();
+          renderLibrary(filtered.filter(c => favs.includes(c.id)));
+        } else {
+          renderLibrary(filtered);
+        }
+      };
+
+      searchInput.addEventListener('input', applyFilters);
+      seasonSel.addEventListener('change', applyFilters);
+      waterSel.addEventListener('change', applyFilters);
+      favCheck.addEventListener('change', applyFilters);
+      
+      // Initial render
+      renderLibrary(cropEngine.getAllCrops());
+    });
+
+    function renderRecommendations(results) {
+      const container = document.getElementById('recommendation-results');
+      
+      if (results.length === 0) {
+        container.innerHTML = `
+          <div class="alert alert-warning">
+            No highly suitable crops found for these exact conditions. Try adjusting your parameters.
+          </div>
+        `;
+        return;
+      }
+      
+      const medals = ['🥇', '🥈', '🥉'];
+      
+      let html = '';
+      results.slice(0, 5).forEach((item, index) => {
+        const rank = index < 3 ? medals[index] : `#${index+1}`;
+        const color = item.score > 80 ? 'var(--color-success)' : (item.score > 60 ? 'var(--color-warning)' : 'var(--color-danger)');
+        
+        html += `
+          <div class="result-card cursor-pointer" onclick="window.location.href='crop-details.html?id=${item.crop.id}'" style="cursor: pointer; transition: transform 0.2s;">
+            <div class="result-rank">${rank}</div>
+            <div class="result-info">
+              <div class="flex justify-between items-center mb-sm">
+                <h4 style="margin:0">${item.crop.name}</h4>
+                <span style="font-weight:bold; color:${color}">${item.score}% Match</span>
+              </div>
+              <div class="score-bar-bg">
+                <div class="score-bar-fill" style="width: ${item.score}%; background-color: ${color}"></div>
+              </div>
+              <p class="text-muted mt-sm" style="font-size:0.85rem">${item.reason}</p>
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+
+    function renderLibrary(crops) {
+      const container = document.getElementById('crop-grid');
+      
+      if (crops.length === 0) {
+        container.innerHTML = `<div style="grid-column: 1/-1" class="text-center py-xl text-muted">No crops found matching criteria.</div>`;
+        return;
+      }
+      
+      const favs = storage.getFavorites();
+      
+      let html = '';
+      crops.forEach(crop => {
+        const isFav = favs.includes(crop.id);
+        // Using generic agricultural photos based on crop name via unspalsh source or placeholders
+        // Using emoji fallback in case image fails
+        
+        html += `
+          <div class="card crop-card">
+            <div class="crop-image">
+              <button class="fav-btn ${isFav ? 'active' : ''}" data-id="${crop.id}" onclick="event.stopPropagation(); toggleFav('${crop.id}')">
+                ${isFav ? '♥' : '♡'}
+              </button>
+              <span>🌱</span>
+            </div>
+            <h3>${crop.name}</h3>
+            <div class="crop-meta">
+              <span class="badge badge-success">${crop.season}</span>
+              <span class="badge badge-info">💧 ${crop.waterRequirement}</span>
+            </div>
+            <p class="crop-desc">${crop.description.substring(0, 80)}...</p>
+            <a href="crop-details.html?id=${crop.id}" class="btn btn-secondary btn-block mt-auto">View Details</a>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+    
+    // Global function for the inline onclick handler
+    window.toggleFav = function(id) {
+      storage.toggleFavorite(id);
+      // Re-trigger current filter state to re-render
+      document.getElementById('lib-search').dispatchEvent(new Event('input'));
+    };
+  </script>
+</body>
+</html>

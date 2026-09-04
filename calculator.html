@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profit Calculator - FarmPulse</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+  
+  <style>
+    .result-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      font-family: var(--font-family-heading);
+      line-height: 1.2;
+    }
+    .cost-item {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--spacing-sm) 0;
+      border-bottom: 1px dashed var(--border-color);
+    }
+    .cost-item:last-child { border-bottom: none; }
+    
+    .input-group {
+      position: relative;
+      display: flex;
+    }
+    .input-prefix {
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      background-color: var(--color-accent-beige);
+      border: 1px solid var(--border-color);
+      border-right: none;
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      color: var(--color-text-muted);
+      font-weight: 600;
+    }
+    .input-group .form-control {
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+  </style>
+</head>
+<body>
+  
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo"><span>🌱</span> FarmPulse</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="crops.html">Crops</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="planner.html">Planner</a>
+        <a href="calculator.html" class="active">Calculator</a>
+      </div>
+      <div class="nav-actions">
+        <div class="location-badge">📍 <span>Detecting...</span></div>
+        <button class="theme-toggle">🌙</button>
+        <button class="mobile-menu-btn">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu-overlay">
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="dashboard.html">📊 Dashboard</a>
+      <a href="crops.html">🌱 Crops</a>
+      <a href="irrigation.html">💧 Irrigation</a>
+      <a href="planner.html">📅 Planner</a>
+      <a href="calculator.html" class="active">💰 Calculator</a>
+    </div>
+  </div>
+
+  <main class="container mb-xl mt-lg">
+    <header class="mb-lg text-center">
+      <h1>💰 Farm Profit Calculator</h1>
+      <p class="text-muted">Estimate your potential returns based on expected yield and costs.</p>
+    </header>
+
+    <div class="grid grid-cols-2-sm gap-xl">
+      
+      <!-- Input Form -->
+      <div class="card">
+        <form id="calc-form">
+          <h3 class="mb-md">Production Estimates</h3>
+          
+          <div class="grid grid-cols-2 gap-md mb-md">
+            <div class="form-group">
+              <label class="form-label">Farm Area (Acres)</label>
+              <input type="number" id="c-area" class="form-control" value="5" min="0.1" step="0.1" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Expected Yield (Quintal/Acre)</label>
+              <input type="number" id="c-yield" class="form-control" value="8" min="0" step="0.1" required>
+            </div>
+          </div>
+          
+          <div class="form-group mb-lg">
+            <label class="form-label">Expected Selling Price (per Quintal)</label>
+            <div class="input-group">
+              <span class="input-prefix">₹</span>
+              <input type="number" id="c-price" class="form-control" value="4600" min="0" required>
+            </div>
+          </div>
+          
+          <h3 class="mb-md border-top pt-md">Estimated Costs</h3>
+          <p class="text-muted mb-md" style="font-size: 0.85rem">Enter total estimated costs for the entire area.</p>
+          
+          <div class="grid grid-cols-2 gap-md mb-md">
+            <div class="form-group">
+              <label class="form-label">Seed Cost</label>
+              <div class="input-group">
+                <span class="input-prefix">₹</span>
+                <input type="number" id="cost-seed" class="form-control" value="5000" min="0">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Fertilizers & Pesticides</label>
+              <div class="input-group">
+                <span class="input-prefix">₹</span>
+                <input type="number" id="cost-fert" class="form-control" value="12000" min="0">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Labour Cost</label>
+              <div class="input-group">
+                <span class="input-prefix">₹</span>
+                <input type="number" id="cost-labor" class="form-control" value="15000" min="0">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Irrigation Cost</label>
+              <div class="input-group">
+                <span class="input-prefix">₹</span>
+                <input type="number" id="cost-water" class="form-control" value="8500" min="0">
+              </div>
+            </div>
+            <div class="form-group" style="grid-column: 1/-1">
+              <label class="form-label">Other Costs (Transport, Machinery)</label>
+              <div class="input-group">
+                <span class="input-prefix">₹</span>
+                <input type="number" id="cost-other" class="form-control" value="5000" min="0">
+              </div>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block mt-md">Calculate Profit</button>
+        </form>
+      </div>
+      
+      <!-- Result Card -->
+      <div>
+        <div id="result-container" style="position: sticky; top: 100px;">
+          <div class="card text-center" style="padding: 4rem 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">📊</div>
+            <p class="text-muted">Enter your estimates and calculate to see projected profits and ROI.</p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </main>
+
+  <nav class="mobile-bottom-nav">
+    <a href="index.html"><span>🏠</span> Home</a>
+    <a href="dashboard.html"><span>📊</span> Dash</a>
+    <a href="crops.html"><span>🌱</span> Crops</a>
+    <a href="about.html"><span>ℹ️</span> About</a>
+  </nav>
+
+  <script type="module" src="./js/app.js"></script>
+  <script type="module">
+    import { calcEngine } from './js/calculator.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('calc-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const inputs = {
+          area: parseFloat(document.getElementById('c-area').value),
+          yieldRate: parseFloat(document.getElementById('c-yield').value),
+          price: parseFloat(document.getElementById('c-price').value),
+          costs: {
+            seed: document.getElementById('cost-seed').value,
+            fertilizer: document.getElementById('cost-fert').value,
+            labor: document.getElementById('cost-labor').value,
+            irrigation: document.getElementById('cost-water').value,
+            other: document.getElementById('cost-other').value
+          }
+        };
+        
+        const result = calcEngine.calculateProfit(inputs);
+        renderResult(result);
+      });
+    });
+    
+    // Formatting helper
+    const fmt = (num) => '₹' + num.toLocaleString('en-IN', { maximumFractionDigits: 0 });
+
+    function renderResult(res) {
+      const isProfit = res.profit >= 0;
+      const profitColor = isProfit ? 'var(--color-success)' : 'var(--color-danger)';
+      
+      const chartSvg = calcEngine.generateChartSVG(res.revenue, res.totalCost, res.profit);
+      
+      let costsHtml = '';
+      res.costsList.forEach(cost => {
+        if (cost.value > 0) {
+          costsHtml += `
+            <div class="cost-item">
+              <span class="text-muted">${cost.name}</span>
+              <span style="font-weight: 500">${fmt(cost.value)}</span>
+            </div>
+          `;
+        }
+      });
+      
+      const html = `
+        <div class="card">
+          <div class="text-center mb-lg pb-md" style="border-bottom: 1px solid var(--border-color)">
+            <p class="text-muted text-uppercase" style="font-size: 0.85rem; letter-spacing: 1px;">Estimated ${isProfit ? 'Profit' : 'Loss'}</p>
+            <div class="result-value" style="color: ${profitColor}">${fmt(res.profit)}</div>
+            
+            <div class="flex justify-center gap-md mt-sm">
+              <div class="badge ${isProfit ? 'badge-success' : 'badge-danger'}">ROI: ${res.roi.toFixed(1)}%</div>
+              <div class="badge badge-info">Margin: ${res.margin.toFixed(1)}%</div>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-md mb-lg text-center">
+            <div style="background-color: rgba(59, 130, 246, 0.1); padding: 1rem; border-radius: var(--radius-md);">
+              <span class="text-muted" style="font-size: 0.85rem">Est. Revenue</span>
+              <div style="font-weight: bold; font-size: 1.25rem; color: var(--color-info)">${fmt(res.revenue)}</div>
+            </div>
+            <div style="background-color: rgba(245, 158, 11, 0.1); padding: 1rem; border-radius: var(--radius-md);">
+              <span class="text-muted" style="font-size: 0.85rem">Total Cost</span>
+              <div style="font-weight: bold; font-size: 1.25rem; color: var(--color-warning)">${fmt(res.totalCost)}</div>
+            </div>
+          </div>
+          
+          <div class="mb-lg">
+            ${chartSvg}
+          </div>
+          
+          <div class="mb-md">
+            <h4 class="mb-sm">Cost Breakdown</h4>
+            ${costsHtml}
+          </div>
+          
+          <div class="disclaimer mt-md pt-sm" style="margin-top: 0">
+            Estimated values based on user inputs. These calculations are informational and not financial advice.
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('result-container').innerHTML = html;
+    }
+  </script>
+</body>
+</html>

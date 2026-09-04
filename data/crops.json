@@ -1,0 +1,218 @@
+[
+  {
+    "id": "wheat",
+    "name": "Wheat",
+    "season": "Rabi",
+    "soil": ["Loamy", "Clay", "Black Soil"],
+    "waterRequirement": "Medium",
+    "temperature": {
+      "min": 10,
+      "max": 25
+    },
+    "duration": "120-150 days",
+    "description": "Wheat is a major cereal crop globally, grown primarily during the cooler Rabi season in India. It requires cool climate during early growth and warm, dry conditions during maturity.",
+    "careInstructions": "Ensure timely irrigation, especially at the crown root initiation (CRI) stage (20-25 days after sowing). Apply nitrogenous fertilizers in split doses.",
+    "risks": ["Rust diseases", "Aphids", "Terminal heat stress"],
+    "revenueBenchmark": 4600,
+    "costBenchmark": 20000,
+    "yieldPerAcre": 15
+  },
+  {
+    "id": "rice",
+    "name": "Rice (Paddy)",
+    "season": "Kharif",
+    "soil": ["Clay", "Loamy"],
+    "waterRequirement": "High",
+    "temperature": {
+      "min": 20,
+      "max": 35
+    },
+    "duration": "100-150 days",
+    "description": "Rice is a staple crop needing high moisture, mostly grown in flooded fields during the Kharif monsoon season.",
+    "careInstructions": "Maintain a standing water level of 2-5cm. Apply Zinc if soil is deficient.",
+    "risks": ["Stem Borer", "Blast Disease", "Brown Plant Hopper", "Water shortage"],
+    "revenueBenchmark": 4200,
+    "costBenchmark": 25000,
+    "yieldPerAcre": 20
+  },
+  {
+    "id": "cotton",
+    "name": "Cotton",
+    "season": "Kharif",
+    "soil": ["Black Soil", "Loamy"],
+    "waterRequirement": "Medium",
+    "temperature": {
+      "min": 21,
+      "max": 30
+    },
+    "duration": "150-180 days",
+    "description": "Cotton is an important cash crop known as 'White Gold'. It thrives in deep, moisture-retentive black soils.",
+    "careInstructions": "Avoid waterlogging. Need regular scouting for pests. Weed management is critical in the first 60 days.",
+    "risks": ["Pink Bollworm", "Whitefly", "Wilt", "Excessive rain during flowering"],
+    "revenueBenchmark": 7000,
+    "costBenchmark": 30000,
+    "yieldPerAcre": 10
+  },
+  {
+    "id": "maize",
+    "name": "Maize (Corn)",
+    "season": "Kharif",
+    "soil": ["Loamy", "Red Soil"],
+    "waterRequirement": "Medium",
+    "temperature": {
+      "min": 21,
+      "max": 27
+    },
+    "duration": "90-110 days",
+    "description": "Maize is a versatile crop used as food, feed, and industrial raw material. It responds well to fertilizers and assured irrigation.",
+    "careInstructions": "Extremely sensitive to waterlogging. Ensure good drainage. Apply Nitrogen in splits.",
+    "risks": ["Fall Armyworm", "Stem Borer", "Stalk Rot"],
+    "revenueBenchmark": 2500,
+    "costBenchmark": 18000,
+    "yieldPerAcre": 25
+  },
+  {
+    "id": "soybean",
+    "name": "Soybean",
+    "season": "Kharif",
+    "soil": ["Black Soil", "Loamy"],
+    "waterRequirement": "Medium",
+    "temperature": {
+      "min": 20,
+      "max": 30
+    },
+    "duration": "90-120 days",
+    "description": "Soybean is a major oilseed crop. It requires well-drained soils and a warm, moist climate.",
+    "careInstructions": "Inoculate seeds with Rhizobium before sowing. Requires good drainage.",
+    "risks": ["Yellow Mosaic Virus", "Girdle Beetle", "Waterlogging"],
+    "revenueBenchmark": 5000,
+    "costBenchmark": 15000,
+    "yieldPerAcre": 8
+  },
+  {
+    "id": "sugarcane",
+    "name": "Sugarcane",
+    "season": "Kharif",
+    "soil": ["Loamy", "Black Soil"],
+    "waterRequirement": "High",
+    "temperature": {
+      "min": 20,
+      "max": 35
+    },
+    "duration": "10-18 months",
+    "description": "A long-duration cash crop requiring heavy irrigation and deep, well-drained soils.",
+    "careInstructions": "Requires frequent irrigation during the tillering and grand growth phases. Earthing up is needed to prevent lodging.",
+    "risks": ["Red Rot", "Early Shoot Borer", "White Grub", "Water stress"],
+    "revenueBenchmark": 350,
+    "costBenchmark": 45000,
+    "yieldPerAcre": 400
+  },
+  {
+    "id": "tomato",
+    "name": "Tomato",
+    "season": "Zaid",
+    "soil": ["Loamy", "Sandy"],
+    "waterRequirement": "Medium",
+    "temperature": {
+      "min": 18,
+      "max": 27
+    },
+    "duration": "90-120 days",
+    "description": "A popular vegetable crop grown almost year-round but sensitive to frost and extreme heat.",
+    "careInstructions": "Stake tall varieties. Ensure regular, even watering to prevent blossom end rot.",
+    "risks": ["Leaf Curl Virus", "Early/Late Blight", "Fruit Borer", "Extreme heat"],
+    "revenueBenchmark": 1500,
+    "costBenchmark": 40000,
+    "yieldPerAcre": 150
+  },
+  {
+    "id": "potato",
+    "name": "Potato",
+    "season": "Rabi",
+    "soil": ["Loamy", "Sandy"],
+    "waterRequirement": "Medium",
+    "temperature": {
+      "min": 15,
+      "max": 20
+    },
+    "duration": "90-110 days",
+    "description": "A starchy tuber crop needing cool temperatures for tuberization and well-aerated soils.",
+    "careInstructions": "Earth up 30-35 days after planting. Maintain moderate soil moisture.",
+    "risks": ["Late Blight", "Aphids", "Frost damage"],
+    "revenueBenchmark": 1200,
+    "costBenchmark": 50000,
+    "yieldPerAcre": 100
+  },
+  {
+    "id": "onion",
+    "name": "Onion",
+    "season": "Rabi",
+    "soil": ["Loamy", "Red Soil"],
+    "waterRequirement": "Medium",
+    "temperature": {
+      "min": 13,
+      "max": 24
+    },
+    "duration": "120-150 days",
+    "description": "Bulb crop needing mild weather for vegetative growth and dry heat for bulb maturity.",
+    "careInstructions": "Keep the field weed-free. Stop irrigation 10-15 days before harvesting.",
+    "risks": ["Thrips", "Purple Blotch", "Excessive soil moisture at maturity"],
+    "revenueBenchmark": 1800,
+    "costBenchmark": 35000,
+    "yieldPerAcre": 100
+  },
+  {
+    "id": "groundnut",
+    "name": "Groundnut (Peanut)",
+    "season": "Kharif",
+    "soil": ["Sandy", "Loamy", "Red Soil"],
+    "waterRequirement": "Low",
+    "temperature": {
+      "min": 25,
+      "max": 30
+    },
+    "duration": "100-120 days",
+    "description": "An important oilseed crop that prefers light, friable soils for easy peg penetration.",
+    "careInstructions": "Apply gypsum at flowering stage. Do not disturb soil after pegging starts.",
+    "risks": ["Tikka Disease", "White Grub", "Aphids"],
+    "revenueBenchmark": 6000,
+    "costBenchmark": 18000,
+    "yieldPerAcre": 8
+  },
+  {
+    "id": "chickpea",
+    "name": "Chickpea (Gram)",
+    "season": "Rabi",
+    "soil": ["Black Soil", "Loamy"],
+    "waterRequirement": "Low",
+    "temperature": {
+      "min": 15,
+      "max": 25
+    },
+    "duration": "100-130 days",
+    "description": "A drought-tolerant pulse crop that grows well on residual soil moisture.",
+    "careInstructions": "Avoid over-irrigation. Nipping of apical buds encourages branching.",
+    "risks": ["Pod Borer", "Wilt disease", "Frost damage"],
+    "revenueBenchmark": 5500,
+    "costBenchmark": 12000,
+    "yieldPerAcre": 6
+  },
+  {
+    "id": "mustard",
+    "name": "Mustard",
+    "season": "Rabi",
+    "soil": ["Loamy", "Sandy"],
+    "waterRequirement": "Low",
+    "temperature": {
+      "min": 10,
+      "max": 25
+    },
+    "duration": "110-140 days",
+    "description": "An oilseed crop mainly grown in North/Central India during winters.",
+    "careInstructions": "Thinning is necessary 15-20 days after sowing. Sulfur application increases oil content.",
+    "risks": ["Aphids", "Alternaria Blight", "Frost"],
+    "revenueBenchmark": 5000,
+    "costBenchmark": 10000,
+    "yieldPerAcre": 8
+  }
+]

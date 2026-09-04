@@ -1,0 +1,42 @@
+[
+  {
+    "id": "sandy",
+    "name": "Sandy Soil",
+    "description": "Light, warm, dry and tend to be acidic and low in nutrients.",
+    "moistureRetention": "Low",
+    "drainage": "Excellent",
+    "suitableCrops": ["Groundnut", "Potato", "Tomato", "Mustard"]
+  },
+  {
+    "id": "loamy",
+    "name": "Loamy Soil",
+    "description": "A balanced mixture of sand, silt, and clay. Highly fertile and suitable for most crops.",
+    "moistureRetention": "Medium",
+    "drainage": "Good",
+    "suitableCrops": ["Wheat", "Rice", "Maize", "Sugarcane", "Cotton", "Soybean", "Tomato", "Potato", "Onion"]
+  },
+  {
+    "id": "clay",
+    "name": "Clay Soil",
+    "description": "Heavy soils that hold high amounts of water and nutrients but have poor drainage.",
+    "moistureRetention": "High",
+    "drainage": "Poor",
+    "suitableCrops": ["Rice", "Wheat", "Sugarcane"]
+  },
+  {
+    "id": "black_soil",
+    "name": "Black Soil (Regur)",
+    "description": "Clayey, deep, and impermeable. High moisture retention capacity.",
+    "moistureRetention": "High",
+    "drainage": "Moderate",
+    "suitableCrops": ["Cotton", "Soybean", "Chickpea", "Wheat", "Sugarcane"]
+  },
+  {
+    "id": "red_soil",
+    "name": "Red Soil",
+    "description": "Porous, friable, and less fertile, usually requiring fertilizers.",
+    "moistureRetention": "Low to Medium",
+    "drainage": "Good",
+    "suitableCrops": ["Maize", "Groundnut", "Onion"]
+  }
+]

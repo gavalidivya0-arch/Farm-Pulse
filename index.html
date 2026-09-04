@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FarmPulse — Smart Farming Decision Assistant</title>
+  
+  <meta name="description" content="Real-time weather, crop intelligence and smart farming recommendations — all in one place.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+  
+  <!-- Initial Styles specifically for Hero section -->
+  <style>
+    .hero {
+      position: relative;
+      background: linear-gradient(rgba(8, 28, 21, 0.7), rgba(8, 28, 21, 0.8)), url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+      color: white;
+      padding: 6rem 0;
+      text-align: center;
+    }
+    .hero h1 {
+      color: white;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      opacity: 0.9;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+    
+    .section-padding { padding: 4rem 0; }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    
+    .feature-card {
+      text-align: center;
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      background-color: var(--color-surface);
+      transition: transform var(--transition-normal);
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .cta-section {
+      background-color: var(--color-primary-dark);
+      color: white;
+      text-align: center;
+      padding: 4rem 0;
+    }
+    .cta-section h2 { color: white; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span>🌱</span> FarmPulse
+      </a>
+      
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="crops.html">Crops</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="planner.html">Planner</a>
+        <a href="calculator.html">Calculator</a>
+      </div>
+      
+      <div class="nav-actions">
+        <div class="location-badge">
+          📍 <span>Detecting...</span>
+        </div>
+        <button class="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+        <button class="mobile-menu-btn" aria-label="Open Mobile Menu">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay">
+    <div class="nav-links">
+      <a href="index.html" class="active">🏠 Home</a>
+      <a href="dashboard.html">📊 Dashboard</a>
+      <a href="crops.html">🌱 Crops</a>
+      <a href="irrigation.html">💧 Irrigation</a>
+      <a href="planner.html">📅 Planner</a>
+      <a href="calculator.html">💰 Calculator</a>
+      <a href="about.html">ℹ️ About</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="container">
+      <h1>FARM SMARTER. GROW BETTER.</h1>
+      <p>Real-time weather, crop intelligence and smart farming recommendations — all in one place.</p>
+      <div class="hero-actions hero-buttons">
+        <a href="dashboard.html" class="btn btn-primary">Explore Dashboard</a>
+        <a href="crops.html" class="btn btn-secondary" style="border-color: white; color: white !important;">Add My Farm</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Live Farm Conditions Teaser -->
+    <section class="section-padding" style="background-color: var(--color-background); margin-top: -3rem; position: relative; z-index: 10;">
+      <div class="container">
+        <div id="live-conditions-preview" class="grid grid-cols-4-lg gap-md text-center">
+          <!-- Populated by JS -->
+          <div class="card skeleton-box"></div>
+          <div class="card skeleton-box"></div>
+          <div class="card skeleton-box"></div>
+          <div class="card skeleton-box"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why FarmPulse Features -->
+    <section class="section-padding">
+      <div class="container">
+        <div class="text-center mb-xl">
+          <h2>Why FarmPulse?</h2>
+          <p class="text-muted">Data-driven insights to help you manage your farm effectively.</p>
+        </div>
+        
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🌤️</div>
+            <h3>Weather-Aware</h3>
+            <p class="text-muted mt-sm">Understand current and upcoming weather conditions tailored to your exact location.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">💧</div>
+            <h3>Smarter Irrigation</h3>
+            <p class="text-muted mt-sm">Use available weather and soil information to support your daily irrigation decisions.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">🌱</div>
+            <h3>Crop Intelligence</h3>
+            <p class="text-muted mt-sm">Explore detailed crop profiles and suitability recommendations based on climate.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Better Planning</h3>
+            <p class="text-muted mt-sm">Plan farming activities week-by-week and estimate potential profitability.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Smart Advisor Preview -->
+    <section class="section-padding" style="background-color: var(--color-surface);">
+      <div class="container">
+        <div class="card" style="background: linear-gradient(135deg, var(--color-success-bg), var(--color-background)); border-color: var(--color-success);">
+          <h2>🧠 Smart Farm Advisor</h2>
+          <div class="grid grid-cols-2-sm gap-lg mt-md">
+            <div>
+              <div class="alert alert-success">
+                <span style="font-size: 1.5rem;">☀️</span>
+                <div>
+                  <strong>Weather Condition</strong>
+                  <p>Clear conditions expected today. Good for outdoor activities.</p>
+                </div>
+              </div>
+              <div class="alert alert-warning">
+                <span style="font-size: 1.5rem;">💧</span>
+                <div>
+                  <strong>Irrigation Status</strong>
+                  <p>Moderate irrigation may be beneficial based on soil type.</p>
+                </div>
+              </div>
+            </div>
+            <div class="flex-col justify-center">
+              <h3>Get Personalized Alerts</h3>
+              <p class="text-muted mb-md">Our rule-based engine analyzes current weather data, soil characteristics, and crop stages to provide timely informational advisories.</p>
+              <a href="dashboard.html" class="btn btn-primary">View Full Analysis →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <h2>Make Better Farming Decisions</h2>
+        <p style="opacity: 0.9; max-width: 600px; margin: 0 auto 2rem;">Bring weather, crops, irrigation and farm planning together in one simple dashboard.</p>
+        <div class="hero-actions">
+          <a href="dashboard.html" class="btn btn-primary" style="background-color: var(--color-success);">Start Exploring</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-bottom-nav">
+    <a href="index.html" class="active">
+      <span>🏠</span> Home
+    </a>
+    <a href="dashboard.html">
+      <span>📊</span> Dash
+    </a>
+    <a href="crops.html">
+      <span>🌱</span> Crops
+    </a>
+    <a href="about.html">
+      <span>ℹ️</span> About
+    </a>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="logo mb-md">🌱 FarmPulse</div>
+          <p class="text-muted">Smart tools for smarter farming.</p>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="crops.html">Crop Recommendation</a></li>
+            <li><a href="irrigation.html">Irrigation Advisor</a></li>
+            <li><a href="calculator.html">Profit Calculator</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="#">Data Sources</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <p class="disclaimer">
+        FarmPulse provides informational estimates based on available data and user inputs. 
+        Actual farming decisions should consider local soil conditions, crop variety, expert advice and on-field observations.
+      </p>
+      
+      <div class="footer-bottom">
+        &copy; 2026 FarmPulse AgriTech. Open Source Initiative.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="./js/app.js"></script>
+  <script type="module">
+    import { locManager } from './js/location.js';
+    import { weatherApi } from './js/weather.js';
+    
+    // Quick load dummy data for hero cards while real API builds
+    document.addEventListener('DOMContentLoaded', async () => {
+      const container = document.getElementById('live-conditions-preview');
+      try {
+        const loc = locManager.getLocation();
+        const weather = await weatherApi.getCurrentWeather(loc.lat, loc.lon);
+        
+        container.innerHTML = `
+          <div class="card" style="padding: 1.5rem;">
+            <div style="font-size: 2rem;">🌡️</div>
+            <div style="font-size: 1.5rem; font-weight: bold; margin: 0.5rem 0;">${weather.temperature}°C</div>
+            <div class="text-muted" style="font-size: 0.85rem;">Temperature</div>
+          </div>
+          <div class="card" style="padding: 1.5rem;">
+            <div style="font-size: 2rem;">💧</div>
+            <div style="font-size: 1.5rem; font-weight: bold; margin: 0.5rem 0;">${weather.humidity}%</div>
+            <div class="text-muted" style="font-size: 0.85rem;">Humidity</div>
+          </div>
+          <div class="card" style="padding: 1.5rem;">
+            <div style="font-size: 2rem;">💨</div>
+            <div style="font-size: 1.5rem; font-weight: bold; margin: 0.5rem 0;">${weather.windSpeed} km/h</div>
+            <div class="text-muted" style="font-size: 0.85rem;">Wind Speed</div>
+          </div>
+          <div class="card" style="padding: 1.5rem;">
+            <div style="font-size: 2rem;">🌧️</div>
+            <div style="font-size: 1.5rem; font-weight: bold; margin: 0.5rem 0;">${weather.precipProb}%</div>
+            <div class="text-muted" style="font-size: 0.85rem;">Rain Chance</div>
+          </div>
+        `;
+      } catch (e) {
+        // Fallback layout if weather.js isn't implemented yet
+        container.innerHTML = `
+          <div class="card"><div style="font-size:2rem">🌡️</div><h3>28°C</h3><span class="text-muted">Temperature</span></div>
+          <div class="card"><div style="font-size:2rem">💧</div><h3>71%</h3><span class="text-muted">Humidity</span></div>
+          <div class="card"><div style="font-size:2rem">🌱</div><h3>65%</h3><span class="text-muted">Soil Moisture</span></div>
+          <div class="card"><div style="font-size:2rem">💨</div><h3>12 km/h</h3><span class="text-muted">Wind</span></div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>

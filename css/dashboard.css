@@ -1,0 +1,219 @@
+/* ==========================================================================
+   Dashboard Specific Styles
+   ========================================================================== */
+
+/* Dashboard Layout */
+.dashboard-grid {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: 1fr;
+  margin-top: var(--spacing-lg);
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 300px 1fr;
+  }
+}
+
+/* Metric Cards (Temperature, Humidity, etc.) */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.metric-card {
+  text-align: center;
+  padding: var(--spacing-lg) var(--spacing-md);
+  background: linear-gradient(145deg, var(--color-surface) 0%, var(--color-background) 100%);
+}
+
+.metric-icon {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-sm);
+  display: inline-block;
+}
+
+.metric-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-family: var(--font-family-heading);
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 0.25rem;
+}
+
+/* Smart Advisor Banner */
+.advisor-banner {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.advisor-banner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M0 100 Q 25 50 50 100 T 100 100 L 100 0 L 0 0 Z" fill="rgba(255,255,255,0.05)"/></svg>') no-repeat center right;
+  background-size: cover;
+  pointer-events: none;
+}
+
+.advisor-banner h2 {
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.advisor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.advisor-item {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.advisor-item-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.advisor-item-value {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+/* 7-Day Forecast Grid */
+.forecast-scroll-wrapper {
+  overflow-x: auto;
+  padding-bottom: var(--spacing-sm);
+  scrollbar-width: thin;
+}
+
+.forecast-grid {
+  display: flex;
+  gap: var(--spacing-sm);
+  min-width: max-content;
+}
+
+.forecast-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+  min-width: 80px;
+  border: 1px solid transparent;
+}
+
+.forecast-day.today {
+  border-color: var(--color-primary);
+  background-color: rgba(64, 145, 108, 0.05);
+}
+
+.forecast-day-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.forecast-icon {
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.forecast-temps {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.forecast-high { font-weight: 700; }
+.forecast-low { color: var(--color-text-muted); }
+
+/* Irrigation Dashboard Result Card */
+.irrigation-result {
+  text-align: center;
+}
+
+.moisture-gauge {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 10px solid var(--border-color);
+  margin: 0 auto var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.moisture-gauge[data-level="low"] { border-color: var(--color-danger); }
+.moisture-gauge[data-level="medium"] { border-color: var(--color-warning); }
+.moisture-gauge[data-level="high"] { border-color: var(--color-success); }
+
+.moisture-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.moisture-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+.irrigation-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  text-align: left;
+}
+
+.irrigation-stat-item {
+  background-color: var(--color-background);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

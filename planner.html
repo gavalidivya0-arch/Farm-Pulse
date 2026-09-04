@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farm Planner - FarmPulse</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+
+  <style>
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-md);
+      padding: var(--spacing-md);
+      background-color: var(--color-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-sm);
+      transition: all 0.2s;
+    }
+    .task-item.completed {
+      opacity: 0.7;
+      background-color: var(--color-background);
+    }
+    .task-item.completed .task-title {
+      text-decoration: line-through;
+      color: var(--color-text-muted);
+    }
+    .task-checkbox {
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+      accent-color: var(--color-primary);
+      cursor: pointer;
+    }
+    .task-content { flex-grow: 1; }
+    .task-title { font-weight: 600; margin-bottom: 0.25rem; }
+    .task-meta { font-size: 0.85rem; color: var(--color-text-muted); }
+    .task-delete {
+      background: none;
+      border: none;
+      color: var(--color-danger);
+      cursor: pointer;
+      padding: 0.25rem;
+      font-size: 1.2rem;
+      opacity: 0.5;
+    }
+    .task-item:hover .task-delete { opacity: 1; }
+    
+    .calendar-journey {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      overflow-x: auto;
+      padding: var(--spacing-xl) 0;
+      position: relative;
+    }
+    .calendar-journey::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 40px;
+      right: 40px;
+      height: 4px;
+      background-color: var(--border-color);
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+    .journey-stage {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-width: 120px;
+    }
+    .journey-icon {
+      width: 60px;
+      height: 60px;
+      background-color: var(--color-surface);
+      border: 4px solid var(--color-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: var(--spacing-sm);
+    }
+    .journey-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem; }
+    .journey-time { font-size: 0.75rem; color: var(--color-text-muted); }
+  </style>
+</head>
+<body>
+  
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo"><span>🌱</span> FarmPulse</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="crops.html">Crops</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="planner.html" class="active">Planner</a>
+        <a href="calculator.html">Calculator</a>
+      </div>
+      <div class="nav-actions">
+        <div class="location-badge">📍 <span>Detecting...</span></div>
+        <button class="theme-toggle">🌙</button>
+        <button class="mobile-menu-btn">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mb-xl mt-lg">
+    <header class="mb-lg">
+      <h1>📅 Farm Planner</h1>
+      <p class="text-muted">Interactive crop calendar and weekly task management.</p>
+    </header>
+
+    <!-- Crop Selection -->
+    <div class="card mb-lg">
+      <div class="flex items-center gap-md">
+        <h3 style="margin: 0; white-space: nowrap">Select Crop Plan:</h3>
+        <select class="form-select" id="plan-crop-select" style="max-width: 300px;">
+          <option value="">Choose crop...</option>
+          <!-- Populated via JS -->
+        </select>
+      </div>
+    </div>
+
+    <!-- Calendar Journey -->
+    <div class="card mb-lg" id="calendar-container" style="display: none;">
+      <h3 class="mb-md">🌾 Growing Journey</h3>
+      <div class="calendar-journey" id="journey-track">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2-sm gap-lg">
+      <!-- Task Tracker -->
+      <div class="card">
+        <div class="flex justify-between items-center mb-md">
+          <h3 style="margin: 0">📋 Weekly Tasks</h3>
+          <span class="badge badge-info" id="task-count">0 Pending</span>
+        </div>
+        
+        <form id="add-task-form" class="flex gap-sm mb-md">
+          <input type="text" id="task-input" class="form-control" placeholder="Add new task..." required>
+          <button type="submit" class="btn btn-primary">+</button>
+        </form>
+        
+        <div id="tasks-list">
+          <!-- Rendered via JS -->
+          <div class="text-center text-muted py-md" id="empty-tasks">No tasks added yet.</div>
+        </div>
+      </div>
+      
+      <!-- Generated AI/Rule Recommendations -->
+      <div class="card" style="background-color: var(--color-background)">
+        <h3 class="mb-md">💡 Suggested Tasks</h3>
+        <p class="text-muted mb-md">Based on your selected crop plan, consider adding these tasks:</p>
+        <div id="suggested-tasks">
+          <div class="text-center text-muted py-md border-dashed border-radius">Select a crop plan above to see suggestions.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <nav class="mobile-bottom-nav">
+    <a href="index.html"><span>🏠</span> Home</a>
+    <a href="dashboard.html"><span>📊</span> Dash</a>
+    <a href="crops.html"><span>🌱</span> Crops</a>
+    <a href="about.html"><span>ℹ️</span> About</a>
+  </nav>
+
+  <script type="module" src="./js/app.js"></script>
+  <script type="module">
+    import storage from './js/storage.js';
+    import { plannerEngine } from './js/planner.js';
+
+    let cropCalendar = {};
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Load Data
+      const cropsList = await plannerEngine.getCropsList();
+      cropCalendar = await plannerEngine.getCalendarData();
+      
+      // 2. Populate Select
+      const select = document.getElementById('plan-crop-select');
+      cropsList.forEach(crop => {
+        // Only add crops that we have calendar data for
+        if (cropCalendar[crop.id]) {
+          const option = document.createElement('option');
+          option.value = crop.id;
+          option.textContent = crop.name;
+          select.appendChild(option);
+        }
+      });
+      
+      // 3. Pre-select if passed in URL or stored in farm data
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlCrop = urlParams.get('crop');
+      if (urlCrop && cropCalendar[urlCrop]) {
+        select.value = urlCrop;
+      } else {
+        const farm = storage.getFarm();
+        if (farm.primaryCrop && cropCalendar[farm.primaryCrop.toLowerCase()]) {
+          select.value = farm.primaryCrop.toLowerCase();
+        }
+      }
+      
+      // Initial render
+      renderTasks();
+      if (select.value) {
+        renderJourney(select.value);
+      }
+      
+      // 4. Event Listeners
+      select.addEventListener('change', (e) => {
+        if (e.target.value) {
+          renderJourney(e.target.value);
+          // Save preference
+          storage.setFarm({ primaryCrop: e.target.options[e.target.selectedIndex].text });
+        } else {
+          document.getElementById('calendar-container').style.display = 'none';
+          document.getElementById('suggested-tasks').innerHTML = '<div class="text-center text-muted py-md border-dashed border-radius">Select a crop plan above to see suggestions.</div>';
+        }
+      });
+      
+      document.getElementById('add-task-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = document.getElementById('task-input');
+        if (input.value.trim()) {
+          storage.addTask({
+            title: input.value.trim(),
+            status: 'pending',
+            date: new Date().toISOString()
+          });
+          input.value = '';
+          renderTasks();
+        }
+      });
+    });
+
+    function renderJourney(cropId) {
+      const data = cropCalendar[cropId];
+      if (!data || !data.stages) return;
+      
+      document.getElementById('calendar-container').style.display = 'block';
+      const track = document.getElementById('journey-track');
+      
+      let html = '';
+      data.stages.forEach(stage => {
+        html += `
+          <div class="journey-stage">
+            <div class="journey-icon">${stage.icon}</div>
+            <div class="journey-name">${stage.name}</div>
+            <div class="journey-time">${stage.duration}</div>
+          </div>
+        `;
+      });
+      track.innerHTML = html;
+      
+      // Render suggested tasks based on the first two stages
+      let suggestedHtml = '';
+      data.stages.slice(0, 3).forEach(stage => {
+        suggestedHtml += `
+          <div class="task-item" style="background-color: transparent">
+            <div class="task-content">
+              <div class="task-title">${stage.task}</div>
+              <div class="task-meta badge badge-info mt-sm" style="display:inline-block">${stage.name}</div>
+            </div>
+            <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.8rem" onclick="addSuggestedTask('${stage.task.replace(/'/g, "\\'")}')">+ Add</button>
+          </div>
+        `;
+      });
+      document.getElementById('suggested-tasks').innerHTML = suggestedHtml;
+    }
+
+    function renderTasks() {
+      const tasks = storage.getTasks();
+      const list = document.getElementById('tasks-list');
+      const emptyMsg = document.getElementById('empty-tasks');
+      const countBadge = document.getElementById('task-count');
+      
+      const pendingCount = tasks.filter(t => t.status !== 'completed').length;
+      countBadge.textContent = `${pendingCount} Pending`;
+      
+      if (tasks.length === 0) {
+        emptyMsg.style.display = 'block';
+        list.innerHTML = '';
+        list.appendChild(emptyMsg);
+        return;
+      }
+      
+      emptyMsg.style.display = 'none';
+      let html = '';
+      
+      // Sort: pending first, then by date
+      const sortedTasks = [...tasks].sort((a, b) => {
+        if (a.status === b.status) return new Date(b.date) - new Date(a.date);
+        return a.status === 'completed' ? 1 : -1;
+      });
+      
+      sortedTasks.forEach(task => {
+        const isCompleted = task.status === 'completed';
+        const dateStr = new Date(task.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        
+        html += `
+          <div class="task-item ${isCompleted ? 'completed' : ''}">
+            <input type="checkbox" class="task-checkbox" ${isCompleted ? 'checked' : ''} onchange="toggleTask('${task.id}')">
+            <div class="task-content">
+              <div class="task-title">${task.title}</div>
+              <div class="task-meta">Added on ${dateStr}</div>
+            </div>
+            <button class="task-delete" onclick="deleteTask('${task.id}')">✕</button>
+          </div>
+        `;
+      });
+      
+      list.innerHTML = html;
+    }
+    
+    // Globals for inline handlers
+    window.toggleTask = function(id) {
+      storage.toggleTaskStatus(id);
+      renderTasks();
+    };
+    
+    window.deleteTask = function(id) {
+      if (confirm('Delete this task?')) {
+        storage.deleteTask(id);
+        renderTasks();
+      }
+    };
+    
+    window.addSuggestedTask = function(title) {
+      storage.addTask({
+        title: title,
+        status: 'pending',
+        date: new Date().toISOString()
+      });
+      renderTasks();
+    };
+  </script>
+</body>
+</html>

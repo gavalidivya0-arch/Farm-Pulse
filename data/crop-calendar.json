@@ -1,0 +1,42 @@
+{
+  "wheat": {
+    "stages": [
+      { "name": "Sowing", "duration": "0-10 days", "icon": "🌱", "task": "Prepare seedbed, treat seeds, and sow at 5cm depth." },
+      { "name": "CRI Stage", "duration": "20-25 days", "icon": "💧", "task": "Crown Root Initiation: First critical irrigation is mandatory." },
+      { "name": "Tillering", "duration": "40-45 days", "icon": "🌿", "task": "Apply nitrogenous fertilizer. Monitor for early aphid attacks." },
+      { "name": "Heading/Flowering", "duration": "80-90 days", "icon": "🌾", "task": "Irrigate if soil is dry. Monitor for rust diseases." },
+      { "name": "Dough Stage", "duration": "100-110 days", "icon": "☀️", "task": "Grain filling begins. Moderate moisture needed. Protect from birds." },
+      { "name": "Harvest", "duration": "130-150 days", "icon": "🚜", "task": "Harvest when grains are hard and moisture is around 12-14%." }
+    ]
+  },
+  "rice": {
+    "stages": [
+      { "name": "Nursery Sowing", "duration": "0-25 days", "icon": "🌱", "task": "Sow seeds in well-prepared nursery beds. Maintain shallow water." },
+      { "name": "Transplanting", "duration": "25-30 days", "icon": "🧑‍🌾", "task": "Transplant seedlings in puddled field. Keep 2-3cm standing water." },
+      { "name": "Tillering", "duration": "45-60 days", "icon": "🌿", "task": "Top dressing of Nitrogen. Maintain 5cm standing water." },
+      { "name": "Panicle Initiation", "duration": "70-80 days", "icon": "🌾", "task": "Critical moisture stage. Do not allow field to dry." },
+      { "name": "Grain Filling", "duration": "90-110 days", "icon": "💧", "task": "Maintain shallow water, drain water 10-15 days before harvest." },
+      { "name": "Harvest", "duration": "120-140 days", "icon": "🚜", "task": "Harvest when 80% panicles turn golden yellow." }
+    ]
+  },
+  "cotton": {
+    "stages": [
+      { "name": "Sowing", "duration": "0-15 days", "icon": "🌱", "task": "Sow treated seeds in moist soil. Maintain proper spacing." },
+      { "name": "Vegetative Growth", "duration": "30-60 days", "icon": "🌿", "task": "Inter-culture operations for weed control. Apply first fertilizer dose." },
+      { "name": "Square Formation", "duration": "60-75 days", "icon": "🌺", "task": "Critical stage for moisture. Scout for early pests (Whitefly/Jassids)." },
+      { "name": "Flowering & Boll Development", "duration": "80-120 days", "icon": "🌸", "task": "Highest water and nutrient requirement. Install pheromone traps for Bollworm." },
+      { "name": "Boll Bursting", "duration": "130-150 days", "icon": "☀️", "task": "Stop irrigation. Sunny and dry weather is ideal." },
+      { "name": "Picking", "duration": "150-180 days", "icon": "🚜", "task": "Manual picking of fully opened bolls in morning hours." }
+    ]
+  },
+  "tomato": {
+    "stages": [
+      { "name": "Nursery", "duration": "0-25 days", "icon": "🌱", "task": "Sow seeds in pro-trays/raised beds. Protect from damping off." },
+      { "name": "Transplanting", "duration": "25-30 days", "icon": "🧑‍🌾", "task": "Transplant in main field at evening. Provide immediate light irrigation." },
+      { "name": "Vegetative Growth", "duration": "40-60 days", "icon": "🌿", "task": "Staking (for indeterminate types). Apply fertilizers and weed." },
+      { "name": "Flowering", "duration": "60-75 days", "icon": "🌼", "task": "Critical for irrigation to prevent blossom drop. Apply micronutrients." },
+      { "name": "Fruiting", "duration": "75-90 days", "icon": "🍅", "task": "Maintain even soil moisture to prevent fruit cracking and blossom end rot." },
+      { "name": "Harvest", "duration": "90-120 days", "icon": "🚜", "task": "Pick fruits at breaker/red stage depending on market distance." }
+    ]
+  }
+}

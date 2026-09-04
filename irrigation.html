@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Irrigation Advisor - FarmPulse</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/dashboard.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+</head>
+<body>
+  
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo"><span>🌱</span> FarmPulse</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="crops.html">Crops</a>
+        <a href="irrigation.html" class="active">Irrigation</a>
+        <a href="planner.html">Planner</a>
+        <a href="calculator.html">Calculator</a>
+      </div>
+      <div class="nav-actions">
+        <div class="location-badge">📍 <span>Detecting...</span></div>
+        <button class="theme-toggle">🌙</button>
+        <button class="mobile-menu-btn">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu-overlay">
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="dashboard.html">📊 Dashboard</a>
+      <a href="crops.html">🌱 Crops</a>
+      <a href="irrigation.html" class="active">💧 Irrigation</a>
+      <a href="planner.html">📅 Planner</a>
+      <a href="calculator.html">💰 Calculator</a>
+    </div>
+  </div>
+
+  <main class="container mb-xl mt-lg">
+    <header class="mb-lg">
+      <h1>💧 Smart Irrigation Advisor</h1>
+      <p class="text-muted">Get real-time watering recommendations based on weather and soil data.</p>
+    </header>
+
+    <div class="grid grid-cols-2-sm gap-xl">
+      
+      <!-- Input Form -->
+      <div class="card">
+        <h3 class="mb-md">Farm Conditions</h3>
+        <form id="irrigation-form">
+          <div class="form-group">
+            <label class="form-label">Crop Type</label>
+            <select class="form-select" id="ir-crop" required>
+              <option value="">Select Crop...</option>
+              <option value="Tomato">Tomato</option>
+              <option value="Rice">Rice</option>
+              <option value="Wheat">Wheat</option>
+              <option value="Cotton">Cotton</option>
+              <option value="Maize">Maize</option>
+              <option value="Soybean">Soybean</option>
+              <option value="Sugarcane">Sugarcane</option>
+              <option value="Potato">Potato</option>
+              <option value="Onion">Onion</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Soil Type</label>
+            <select class="form-select" id="ir-soil" required>
+              <option value="">Select Soil...</option>
+              <option value="Sandy">Sandy (Drains fast)</option>
+              <option value="Loamy">Loamy (Balanced)</option>
+              <option value="Clay">Clay (Retains water)</option>
+              <option value="Black Soil">Black Soil</option>
+              <option value="Red Soil">Red Soil</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Current Growth Stage</label>
+            <select class="form-select" id="ir-stage" required>
+              <option value="">Select Stage...</option>
+              <option value="Germination">Germination</option>
+              <option value="Vegetative">Vegetative</option>
+              <option value="Flowering">Flowering (Critical)</option>
+              <option value="Fruiting">Fruiting/Grain Filling (Critical)</option>
+              <option value="Maturity">Maturity</option>
+            </select>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block mt-lg" id="analyze-btn">Analyze Irrigation Need</button>
+        </form>
+      </div>
+      
+      <!-- Result Card -->
+      <div>
+        <h3 class="mb-md">Advisory Result</h3>
+        <div id="result-container">
+          <div class="card text-center" style="padding: 4rem 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">💧</div>
+            <p class="text-muted">Enter your farm details and click analyze to see recommendations based on current local weather.</p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </main>
+
+  <nav class="mobile-bottom-nav">
+    <a href="index.html"><span>🏠</span> Home</a>
+    <a href="dashboard.html"><span>📊</span> Dash</a>
+    <a href="crops.html"><span>🌱</span> Crops</a>
+    <a href="about.html"><span>ℹ️</span> About</a>
+  </nav>
+
+  <script type="module" src="./js/app.js"></script>
+  <script type="module">
+    import { irrigationEngine } from './js/irrigation.js';
+    import storage from './js/storage.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Pre-fill if farm data exists
+      const farm = storage.getFarm();
+      if (farm.soilType) {
+        const select = document.getElementById('ir-soil');
+        for (let i=0; i<select.options.length; i++) {
+          if (select.options[i].value === farm.soilType) {
+            select.selectedIndex = i;
+            break;
+          }
+        }
+      }
+
+      document.getElementById('irrigation-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const btn = document.getElementById('analyze-btn');
+        btn.disabled = true;
+        btn.innerHTML = 'Analyzing...';
+        
+        const inputs = {
+          crop: document.getElementById('ir-crop').value,
+          soil: document.getElementById('ir-soil').value,
+          stage: document.getElementById('ir-stage').value
+        };
+        
+        try {
+          const result = await irrigationEngine.analyze(inputs);
+          renderResult(result);
+        } catch (err) {
+          document.getElementById('result-container').innerHTML = `
+            <div class="alert alert-danger">Failed to calculate irrigation need. Ensure you have internet connection.</div>
+          `;
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = 'Analyze Irrigation Need';
+        }
+      });
+    });
+
+    function renderResult(res) {
+      let gaugeLabel = 'GOOD';
+      if (res.level === 'low') gaugeLabel = 'LOW';
+      if (res.level === 'medium') gaugeLabel = 'MODERATE';
+      
+      const html = `
+        <div class="card irrigation-result">
+          <h2 style="margin-bottom: 0.5rem">${res.status}</h2>
+          
+          <div class="moisture-gauge" data-level="${res.level}">
+            <span class="moisture-value">${res.soilMoistureIndex}%</span>
+            <span class="moisture-label">Moisture: ${gaugeLabel}</span>
+          </div>
+          
+          <div class="irrigation-stats">
+            <div class="irrigation-stat-item">
+              <span class="text-muted">Rain Tomorrow</span>
+              <span style="font-weight: bold">${res.weather.precipProb}%</span>
+            </div>
+            <div class="irrigation-stat-item">
+              <span class="text-muted">Temperature</span>
+              <span style="font-weight: bold">${res.weather.temperature}°C</span>
+            </div>
+            <div class="irrigation-stat-item">
+              <span class="text-muted">Humidity</span>
+              <span style="font-weight: bold">${res.weather.humidity}%</span>
+            </div>
+            <div class="irrigation-stat-item" style="grid-column: 1/-1">
+              <span class="text-muted">Est. Volume Requirement</span>
+              <span style="font-weight: bold; color: var(--color-info)">${res.volume}</span>
+            </div>
+          </div>
+          
+          <div class="alert alert-warning mb-md" style="text-align: left">
+            <strong>Recommended Time:</strong><br>
+            ${res.time}
+          </div>
+          
+          <p class="text-muted" style="font-size: 0.9rem; text-align: left; line-height: 1.5">
+            ${res.explanation}
+          </p>
+        </div>
+      `;
+      
+      document.getElementById('result-container').innerHTML = html;
+    }
+  </script>
+</body>
+</html>

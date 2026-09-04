@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - FarmPulse</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+</head>
+<body>
+  
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo"><span>🌱</span> FarmPulse</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="crops.html">Crops</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="planner.html">Planner</a>
+        <a href="calculator.html">Calculator</a>
+      </div>
+      <div class="nav-actions">
+        <div class="location-badge">📍 <span>Detecting...</span></div>
+        <button class="theme-toggle">🌙</button>
+        <button class="mobile-menu-btn">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu-overlay">
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="dashboard.html">📊 Dashboard</a>
+      <a href="crops.html">🌱 Crops</a>
+      <a href="irrigation.html">💧 Irrigation</a>
+      <a href="planner.html">📅 Planner</a>
+      <a href="calculator.html">💰 Calculator</a>
+    </div>
+  </div>
+
+  <main class="container mb-xl mt-lg">
+    
+    <div class="card mb-xl text-center" style="background-color: var(--color-primary-dark); color: white; border: none; padding: 4rem 2rem;">
+      <h1 style="color: white; font-size: 3rem; margin-bottom: 1rem;">About FarmPulse</h1>
+      <p style="font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto;">Building a smarter, more resilient agricultural future through accessible data and intelligent advisory.</p>
+    </div>
+    
+    <div class="grid grid-cols-2-sm gap-xl mb-xl">
+      <div>
+        <h2>Our Mission</h2>
+        <p class="mb-md">FarmPulse was created with a singular goal: to empower farmers with data-driven insights. By combining real-time meteorological data with established agronomic rules, we provide actionable recommendations that help reduce risk and improve yield.</p>
+        <p>We believe that modern AgriTech should not be complicated. It should be intuitive, fast, and accessible directly from the field.</p>
+      </div>
+      <div>
+        <div class="card bg-background" style="height: 100%;">
+          <h3 class="mb-md">Platform Pillars</h3>
+          <ul class="flex-col gap-sm" style="list-style: none; padding: 0;">
+            <li class="flex items-center gap-sm">
+              <div class="badge badge-success" style="width: 32px; height: 32px; display:flex; align-items:center; justify-content:center; border-radius:50%">1</div>
+              <strong>Data Accuracy:</strong> Utilizing Open-Meteo for precise hyper-local forecasting.
+            </li>
+            <li class="flex items-center gap-sm">
+              <div class="badge badge-success" style="width: 32px; height: 32px; display:flex; align-items:center; justify-content:center; border-radius:50%">2</div>
+              <strong>Agronomic Soundness:</strong> Recommendations based on generalized crop science rules.
+            </li>
+            <li class="flex items-center gap-sm">
+              <div class="badge badge-success" style="width: 32px; height: 32px; display:flex; align-items:center; justify-content:center; border-radius:50%">3</div>
+              <strong>Accessibility:</strong> Fast, offline-capable, and designed for rural connectivity.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card mb-xl text-center border-dashed">
+      <h2>Data Sources & Transparency</h2>
+      <p class="text-muted mb-md max-w-600 mx-auto" style="margin-left: auto; margin-right: auto; max-width: 600px;">FarmPulse uses open data and transparent rule-based engines. We do not use "black-box" AI that provides unexplainable advice.</p>
+      
+      <div class="grid grid-cols-3 gap-md text-left mt-lg">
+        <div class="card" style="box-shadow: none">
+          <h4 class="mb-sm">🌤️ Weather Data</h4>
+          <p class="text-muted" style="font-size: 0.9rem">Live weather, soil moisture, and 7-day forecasts are fetched securely from the <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo API</a>.</p>
+        </div>
+        <div class="card" style="box-shadow: none">
+          <h4 class="mb-sm">🌱 Crop Intelligence</h4>
+          <p class="text-muted" style="font-size: 0.9rem">Crop suitability scores are generated using our internal rule-engine matching temperature, season, soil, and water requirements.</p>
+        </div>
+        <div class="card" style="box-shadow: none">
+          <h4 class="mb-sm">💾 Local Privacy</h4>
+          <p class="text-muted" style="font-size: 0.9rem">Your farm details, location, and tasks are stored entirely on your device via LocalStorage. We do not collect or track your data.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="alert alert-warning">
+      <strong>Disclaimer:</strong>
+      <p class="mt-sm">FarmPulse provides informational estimates based on available data and user inputs. The application does not provide guaranteed agricultural, financial, or AI predictions. Actual farming decisions should always consider local, on-the-ground soil conditions, specific crop varieties, expert advice from local agronomists, and direct field observations.</p>
+    </div>
+
+  </main>
+
+  <nav class="mobile-bottom-nav">
+    <a href="index.html"><span>🏠</span> Home</a>
+    <a href="dashboard.html"><span>📊</span> Dash</a>
+    <a href="crops.html"><span>🌱</span> Crops</a>
+    <a href="about.html" class="active"><span>ℹ️</span> About</a>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="footer mt-xl">
+    <div class="container">
+      <div class="footer-bottom" style="border: none; padding-top: 0;">
+        &copy; 2026 FarmPulse AgriTech. Built with Vanilla web technologies.
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

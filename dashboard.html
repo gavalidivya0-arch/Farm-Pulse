@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - FarmPulse</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/dashboard.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+</head>
+<body>
+  
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span>🌱</span> FarmPulse
+      </a>
+      
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="crops.html">Crops</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="planner.html">Planner</a>
+        <a href="calculator.html">Calculator</a>
+      </div>
+      
+      <div class="nav-actions">
+        <div class="location-badge">
+          📍 <span>Detecting...</span>
+        </div>
+        <button class="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+        <button class="mobile-menu-btn" aria-label="Open Mobile Menu">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay">
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="dashboard.html" class="active">📊 Dashboard</a>
+      <a href="crops.html">🌱 Crops</a>
+      <a href="irrigation.html">💧 Irrigation</a>
+      <a href="planner.html">📅 Planner</a>
+      <a href="calculator.html">💰 Calculator</a>
+    </div>
+  </div>
+
+  <main class="container mb-xl">
+    
+    <!-- Dashboard Header -->
+    <header class="mt-xl mb-lg">
+      <h1 id="greeting">Good Morning, Farmer 👋</h1>
+      <p class="text-muted"><span class="location-badge-text">Pune, Maharashtra</span> • <span id="current-date">Loading date...</span></p>
+    </header>
+
+    <!-- Top Advisor Banner (Populated dynamically) -->
+    <section id="alerts-container">
+      <!-- Loading skeleton for banner -->
+      <div class="advisor-banner skeleton">
+        <div class="skeleton-title"></div>
+        <div class="skeleton-text"></div>
+        <div class="skeleton-text"></div>
+      </div>
+    </section>
+
+    <!-- Main Grid -->
+    <div class="dashboard-grid">
+      
+      <!-- Left/Main Column -->
+      <div class="dashboard-main">
+        
+        <!-- Live Metrics -->
+        <h3 class="mb-md">🌤️ Weather Overview</h3>
+        <div class="metrics-grid" id="metrics-container">
+          <div class="card metric-card skeleton-box"></div>
+          <div class="card metric-card skeleton-box"></div>
+          <div class="card metric-card skeleton-box"></div>
+          <div class="card metric-card skeleton-box"></div>
+        </div>
+
+        <!-- 7 Day Forecast -->
+        <div class="card mb-lg">
+          <h3 class="mb-md">📈 7-Day Forecast</h3>
+          <div class="forecast-scroll-wrapper">
+            <div class="forecast-grid" id="forecast-container">
+              <!-- Loading Skeletons -->
+              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
+              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
+              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
+              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
+              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
+              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
+              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Right Sidebar -->
+      <aside class="dashboard-sidebar">
+        
+        <!-- Quick Actions -->
+        <div class="card mb-lg">
+          <h3 class="mb-md">⚡ Quick Actions</h3>
+          <div class="flex-col gap-sm">
+            <a href="irrigation.html" class="btn btn-secondary btn-block justify-between">
+              <span>💧 Analyze Irrigation</span>
+              <span>→</span>
+            </a>
+            <a href="crops.html" class="btn btn-secondary btn-block justify-between">
+              <span>🌱 Find Suitable Crop</span>
+              <span>→</span>
+            </a>
+            <a href="calculator.html" class="btn btn-secondary btn-block justify-between">
+              <span>💰 Estimate Profit</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Current Crop Status -->
+        <div class="card mb-lg">
+          <div class="flex justify-between items-center mb-md">
+            <h3>🌱 Current Crop</h3>
+            <a href="planner.html" style="font-size: 0.85rem;">Edit</a>
+          </div>
+          <div id="crop-status-container">
+             <div class="text-center text-muted py-md">
+               <p>No active crop configured.</p>
+               <a href="planner.html" class="btn btn-secondary mt-sm" style="padding: 0.5rem 1rem;">Setup Farm Plan</a>
+             </div>
+          </div>
+        </div>
+        
+      </aside>
+    </div>
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-bottom-nav">
+    <a href="index.html"><span>🏠</span> Home</a>
+    <a href="dashboard.html" class="active"><span>📊</span> Dash</a>
+    <a href="crops.html"><span>🌱</span> Crops</a>
+    <a href="about.html"><span>ℹ️</span> About</a>
+  </nav>
+
+  <!-- Scripts -->
+  <script type="module" src="./js/app.js"></script>
+  <script type="module">
+    import { locManager } from './js/location.js';
+    import { weatherApi } from './js/weather.js';
+    import { AlertsEngine } from './js/alerts.js';
+    import storage from './js/storage.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Update Greeting and Date
+      const hour = new Date().getHours();
+      let greeting = 'Good Evening';
+      if (hour < 12) greeting = 'Good Morning';
+      else if (hour < 17) greeting = 'Good Afternoon';
+      
+      const user = storage.getUser();
+      document.getElementById('greeting').innerHTML = `${greeting}, ${user.name} 👋`;
+      
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', options);
+
+      // 2. Load Location & Weather
+      try {
+        const loc = locManager.getLocation();
+        document.querySelector('.location-badge-text').textContent = loc.name;
+        
+        const weatherData = await weatherApi.getWeatherData(loc.lat, loc.lon);
+        renderDashboard(weatherData);
+        
+      } catch (e) {
+        console.error("Dashboard error:", e);
+        document.getElementById('metrics-container').innerHTML = `<div class="alert alert-danger" style="grid-column: 1/-1">Failed to load weather data. Please try again later.</div>`;
+      }
+    });
+
+    function renderDashboard(data) {
+      const { current, forecast } = data;
+      
+      // Render Metrics
+      const metricsHtml = `
+        <div class="card metric-card">
+          <div class="metric-icon">${current.icon}</div>
+          <div class="metric-value">${current.temperature}°C</div>
+          <div class="metric-label">Temperature</div>
+          <div class="text-muted" style="font-size: 0.75rem; margin-top: 5px;">${current.condition}</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-icon">💧</div>
+          <div class="metric-value">${current.humidity}%</div>
+          <div class="metric-label">Humidity</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-icon">🌱</div>
+          <div class="metric-value">${current.soilMoisture}%</div>
+          <div class="metric-label">Soil Moisture</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-icon">🌧️</div>
+          <div class="metric-value">${current.precipProb}%</div>
+          <div class="metric-label">Rain Chance</div>
+        </div>
+      `;
+      document.getElementById('metrics-container').innerHTML = metricsHtml;
+
+      // Render Forecast
+      const forecastHtml = forecast.map(day => `
+        <div class="forecast-day ${day.dayName === 'Today' ? 'today' : ''}">
+          <div class="forecast-day-name">${day.dayName}</div>
+          <div class="forecast-icon">${day.icon}</div>
+          <div class="forecast-temps">
+            <span class="forecast-high">${day.maxTemp}°</span>
+            <span class="forecast-low">${day.minTemp}°</span>
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('forecast-container').innerHTML = forecastHtml;
+
+      // Render Alerts
+      const farmData = storage.getFarm();
+      const alerts = AlertsEngine.generateAlerts(data, farmData);
+      
+      if (alerts.length > 0) {
+        // Show highest priority alert in banner
+        const mainAlert = alerts[0]; 
+        
+        let bannerStyle = `background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);`;
+        if (mainAlert.type === 'danger') {
+          bannerStyle = `background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 100%);`;
+        } else if (mainAlert.type === 'warning') {
+          bannerStyle = `background: linear-gradient(135deg, #78350f 0%, #d97706 100%);`;
+        }
+        
+        const bannerHtml = `
+          <div class="advisor-banner" style="${bannerStyle}">
+            <div class="badge mb-sm" style="background: rgba(255,255,255,0.2); color: white;">
+              ${mainAlert.icon} ${mainAlert.type.toUpperCase()} ALERT
+            </div>
+            <h2>${mainAlert.title}</h2>
+            <p style="opacity: 0.9; margin-top: 0.5rem; max-width: 600px;">${mainAlert.message}</p>
+            
+            <div class="advisor-grid">
+              <div class="advisor-item">
+                <div class="advisor-item-title">🌡️ Tomorrow High</div>
+                <div class="advisor-item-value">${forecast[1].maxTemp}°C</div>
+              </div>
+              <div class="advisor-item">
+                <div class="advisor-item-title">🌧️ Rain Prob.</div>
+                <div class="advisor-item-value">${forecast[1].precipProb}%</div>
+              </div>
+              <div class="advisor-item">
+                <div class="advisor-item-title">💧 Irrigation</div>
+                <div class="advisor-item-value">${current.soilMoisture < 40 ? 'Required' : 'Adequate'}</div>
+              </div>
+            </div>
+          </div>
+        `;
+        document.getElementById('alerts-container').innerHTML = bannerHtml;
+      }
+    }
+  </script>
+</body>
+</html>
