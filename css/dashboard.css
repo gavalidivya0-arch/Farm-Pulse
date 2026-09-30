@@ -2,6 +2,11 @@
    Dashboard Specific Styles
    ========================================================================== */
 
+#greeting {
+  letter-spacing: 1px;
+  padding: 0.5rem;
+}
+
 /* Dashboard Layout */
 .dashboard-grid {
   display: grid;
