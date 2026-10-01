@@ -84,7 +84,8 @@ class WeatherAPI {
     for (let i = 0; i < 7; i++) {
       if (!raw.daily.time[i]) continue;
       
-      const date = new Date(raw.daily.time[i]);
+      // Append T12:00:00 to force local time evaluation and prevent timezone date shifting
+      const date = new Date(raw.daily.time[i] + 'T12:00:00');
       const wInfo = this.getWeatherInfo(raw.daily.weathercode[i]);
       
       forecast.push({
