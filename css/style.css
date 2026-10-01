@@ -36,8 +36,16 @@
   --shadow-card: 0 10px 40px -10px rgba(0,0,0,0.08);
   
   /* Typography */
-  --font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-family-heading: 'Outfit', 'Inter', system-ui, sans-serif;
+  --font-family-base: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-family-heading: 'Sora', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-family-display: 'Sora', system-ui, sans-serif;
+
+  /* Letter Spacing */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.04em;
+  --tracking-widest: 0.12em;
   
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -93,8 +101,11 @@ body {
   font-family: var(--font-family-base);
   background-color: var(--color-background);
   color: var(--color-text);
-  line-height: 1.6;
+  line-height: 1.7;
+  font-size: 1rem;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   transition: background-color var(--transition-normal), color var(--transition-normal);
   overflow-x: hidden;
 }
@@ -103,9 +114,20 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family-heading);
   font-weight: 700;
   line-height: 1.2;
+  letter-spacing: var(--tracking-tight);
   color: var(--color-text);
   margin-bottom: var(--spacing-md);
 }
+
+h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; }
+h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; }
+h3 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
+h4 { font-size: 1.1rem; font-weight: 600; }
+h5 { font-size: 1rem; font-weight: 600; }
+h6 { font-size: 0.9rem; font-weight: 600; letter-spacing: var(--tracking-wide); text-transform: uppercase; }
+
+p { line-height: 1.75; margin-bottom: var(--spacing-md); }
+p:last-child { margin-bottom: 0; }
 
 a {
   color: var(--color-primary);
@@ -178,4 +200,82 @@ ul {
   font-style: italic;
   padding: var(--spacing-md);
   border-top: 1px solid var(--border-color);
+  letter-spacing: 0.01em;
+}
+
+/* =========================================
+   Global Typography Enhancements
+   ========================================= */
+
+/* Navbar brand font */
+.logo {
+  letter-spacing: -0.03em;
+}
+
+/* Nav links - clean, medium weight */
+.nav-links a {
+  font-family: var(--font-family-base);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Section subtitles / lead text */
+.lead {
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--color-text-muted);
+}
+
+/* Data / metric numbers */
+.metric-value,
+.result-value,
+.moisture-value {
+  font-family: var(--font-family-mono);
+  letter-spacing: -0.02em;
+}
+
+/* Section labels / overlines */
+.overline {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+/* Badge text */
+.badge {
+  font-family: var(--font-family-base);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Form labels */
+.form-label {
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  font-size: 0.875rem;
+}
+
+/* Card headings */
+.card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Footer headings */
+.footer h4 {
+  font-family: var(--font-family-heading);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Button text */
+.btn {
+  font-family: var(--font-family-base);
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }

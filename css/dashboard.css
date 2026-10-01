@@ -50,16 +50,18 @@
 .metric-value {
   font-size: 1.75rem;
   font-weight: 700;
-  font-family: var(--font-family-heading);
+  font-family: var(--font-family-mono);
   color: var(--color-primary);
   line-height: 1.2;
+  letter-spacing: -0.03em;
 }
 
 .metric-label {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--color-text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   margin-top: 0.25rem;
 }
 
@@ -91,6 +93,16 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.advisor-banner p {
+  font-size: 1rem;
+  line-height: 1.7;
+  font-weight: 400;
 }
 
 .advisor-grid {
@@ -112,10 +124,11 @@
 }
 
 .advisor-item-title {
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  opacity: 0.9;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  opacity: 0.85;
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
@@ -123,8 +136,10 @@
 }
 
 .advisor-item-value {
-  font-weight: 500;
-  font-size: 1.1rem;
+  font-family: var(--font-family-mono);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
 }
 
 /* 7-Day Forecast Grid */
