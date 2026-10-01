@@ -213,16 +213,16 @@
 }
 
 .advisor-item-title {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  opacity: 0.75;
-  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: var(--font-family-heading);
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 0.35rem;
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: var(--font-family-base);
+  opacity: 1;
 }
 
 .advisor-item-value {
