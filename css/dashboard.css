@@ -2,9 +2,15 @@
    Dashboard Specific Styles
    ========================================================================== */
 
+.dashboard-header {
+  padding-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
+}
+
 #greeting {
-  letter-spacing: 1px;
-  padding: 0.5rem;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--spacing-xs);
+  line-height: 1.3;
 }
 
 /* Dashboard Layout */
