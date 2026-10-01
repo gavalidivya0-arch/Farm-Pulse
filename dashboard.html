@@ -199,23 +199,23 @@
       
       // Render Metrics
       const metricsHtml = `
-        <div class="card metric-card">
+        <div class="card metric-card temp">
           <div class="metric-icon">${current.icon}</div>
           <div class="metric-value">${current.temperature}°C</div>
           <div class="metric-label">Temperature</div>
-          <div class="text-muted" style="font-size: 0.75rem; margin-top: 5px;">${current.condition}</div>
+          <div class="text-muted">${current.condition}</div>
         </div>
-        <div class="card metric-card">
+        <div class="card metric-card humidity">
           <div class="metric-icon">💧</div>
           <div class="metric-value">${current.humidity}%</div>
           <div class="metric-label">Humidity</div>
         </div>
-        <div class="card metric-card">
+        <div class="card metric-card soil">
           <div class="metric-icon">🌱</div>
           <div class="metric-value">${current.soilMoisture}%</div>
           <div class="metric-label">Soil Moisture</div>
         </div>
-        <div class="card metric-card">
+        <div class="card metric-card rain">
           <div class="metric-icon">🌧️</div>
           <div class="metric-value">${current.precipProb}%</div>
           <div class="metric-label">Rain Chance</div>
