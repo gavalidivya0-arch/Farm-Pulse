@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Farm — FarmPulse</title>
+  <meta name="description" content="Set up your farm profile on FarmPulse for personalized crop, irrigation and planning insights.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+
+  <style>
+    /* ---- Page Hero Banner ---- */
+    .farm-hero {
+      background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 60%, var(--color-secondary) 100%);
+      color: white;
+      padding: 4rem 0 6rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .farm-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .farm-hero h1 { color: white; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+    .farm-hero p { color: rgba(255,255,255,0.8); font-size: 1.1rem; margin: 0; }
+    .farm-hero .hero-icon { font-size: 3.5rem; margin-bottom: 1rem; display: block; }
+
+    /* ---- Floating Form Card ---- */
+    .form-card-wrapper {
+      margin-top: -3rem;
+      position: relative;
+      z-index: 10;
+      padding-bottom: 4rem;
+    }
+
+    /* ---- Step Indicator ---- */
+    .steps-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 2.5rem;
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .step-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-accent-beige);
+      border: 2px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      transition: all 0.3s;
+      font-family: var(--font-family-heading);
+    }
+    .step.active .step-circle {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: white;
+      box-shadow: 0 0 0 4px rgba(27, 67, 50, 0.15);
+    }
+    .step.done .step-circle {
+      background: var(--color-success);
+      border-color: var(--color-success);
+      color: white;
+    }
+    .step-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+    }
+    .step.active .step-label { color: var(--color-primary); }
+    .step-line {
+      flex: 1;
+      height: 2px;
+      background: var(--border-color);
+      margin: 0 0.5rem;
+      margin-bottom: 1.4rem;
+      max-width: 60px;
+      transition: background 0.3s;
+    }
+    .step-line.done { background: var(--color-success); }
+
+    /* ---- Form Sections ---- */
+    .form-section {
+      display: none;
+      animation: fadeSlideIn 0.35s ease;
+    }
+    .form-section.active { display: block; }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---- Section heading ---- */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      background: rgba(27, 67, 50, 0.08);
+      padding: 0.3rem 0.8rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 1rem;
+    }
+
+    /* ---- Soil / Irrigation Option Cards ---- */
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.75rem;
+    }
+    .option-card {
+      position: relative;
+      cursor: pointer;
+    }
+    .option-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .option-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 1rem 0.5rem;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .option-label:hover {
+      border-color: var(--color-primary);
+      background: rgba(27, 67, 50, 0.04);
+    }
+    .option-card input:checked + .option-label {
+      border-color: var(--color-primary);
+      background: rgba(27, 67, 50, 0.08);
+      box-shadow: 0 0 0 3px rgba(27, 67, 50, 0.12);
+    }
+    .option-icon { font-size: 1.6rem; }
+    .option-text { font-size: 0.8rem; font-weight: 600; color: var(--color-text); }
+
+    /* ---- Summary Card ---- */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .summary-item {
+      background: var(--color-background);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+    }
+    .summary-item-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+      margin-bottom: 0.3rem;
+    }
+    .summary-item-value {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--color-text);
+      font-family: var(--font-family-heading);
+    }
+
+    /* ---- Success State ---- */
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .success-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: block;
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* ---- Nav buttons ---- */
+    .form-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo"><span>🌱</span> FarmPulse</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="crops.html">Crops</a>
+        <a href="irrigation.html">Irrigation</a>
+        <a href="planner.html">Planner</a>
+        <a href="calculator.html">Calculator</a>
+      </div>
+      <div class="nav-actions">
+        <div class="location-badge">📍 <span>Detecting...</span></div>
+        <button class="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+        <button class="mobile-menu-btn" aria-label="Open Mobile Menu">☰</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay">
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="dashboard.html">📊 Dashboard</a>
+      <a href="crops.html">🌱 Crops</a>
+      <a href="irrigation.html">💧 Irrigation</a>
+      <a href="planner.html">📅 Planner</a>
+      <a href="calculator.html">💰 Calculator</a>
+      <a href="about.html">ℹ️ About</a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="farm-hero">
+    <div class="container">
+      <span class="hero-icon">🏡</span>
+      <h1>Set Up Your Farm</h1>
+      <p>Tell us about your farm so FarmPulse can give you personalised insights.</p>
+    </div>
+  </div>
+
+  <!-- Form Card -->
+  <div class="form-card-wrapper">
+    <div class="container" style="max-width: 700px;">
+      <div class="card" id="main-card">
+
+        <!-- Steps Indicator -->
+        <div class="steps-indicator" id="steps-indicator">
+          <div class="step active" id="step-ind-1">
+            <div class="step-circle">1</div>
+            <span class="step-label">Profile</span>
+          </div>
+          <div class="step-line" id="line-1-2"></div>
+          <div class="step" id="step-ind-2">
+            <div class="step-circle">2</div>
+            <span class="step-label">Land</span>
+          </div>
+          <div class="step-line" id="line-2-3"></div>
+          <div class="step" id="step-ind-3">
+            <div class="step-circle">3</div>
+            <span class="step-label">Crops</span>
+          </div>
+          <div class="step-line" id="line-3-4"></div>
+          <div class="step" id="step-ind-4">
+            <div class="step-circle">4</div>
+            <span class="step-label">Review</span>
+          </div>
+        </div>
+
+        <!-- ========== STEP 1: Farmer Profile ========== -->
+        <div class="form-section active" id="section-1">
+          <div class="section-label">👤 Step 1 of 4 — Farmer Profile</div>
+          <h2 style="margin-bottom: 0.25rem;">Who are you?</h2>
+          <p class="text-muted" style="margin-bottom: 1.5rem;">We'll personalise your dashboard greeting and reports.</p>
+
+          <div class="form-group">
+            <label class="form-label" for="farmer-name">Your Name</label>
+            <input type="text" id="farmer-name" class="form-control" placeholder="e.g. Rajesh Kumar" maxlength="60">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="farm-name">Farm Name <span class="text-muted">(optional)</span></label>
+            <input type="text" id="farm-name" class="form-control" placeholder="e.g. Green Valley Farm" maxlength="80">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="farm-location">Village / Town / City</label>
+            <input type="text" id="farm-location" class="form-control" placeholder="e.g. Nashik, Maharashtra">
+          </div>
+          <div class="form-nav">
+            <span></span>
+            <button class="btn btn-primary" id="next-1">Next: Land Details →</button>
+          </div>
+        </div>
+
+        <!-- ========== STEP 2: Land Details ========== -->
+        <div class="form-section" id="section-2">
+          <div class="section-label">🌾 Step 2 of 4 — Land Details</div>
+          <h2 style="margin-bottom: 0.25rem;">Tell us about your land.</h2>
+          <p class="text-muted" style="margin-bottom: 1.5rem;">This helps with irrigation and yield estimates.</p>
+
+          <div class="grid grid-cols-2-sm gap-md">
+            <div class="form-group">
+              <label class="form-label" for="farm-area">Total Farm Area (Acres)</label>
+              <input type="number" id="farm-area" class="form-control" placeholder="e.g. 5" min="0.1" step="0.1">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="farm-plots">Number of Plots</label>
+              <input type="number" id="farm-plots" class="form-control" placeholder="e.g. 2" min="1" step="1">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Soil Type</label>
+            <div class="option-grid">
+              <label class="option-card">
+                <input type="radio" name="soil-type" value="Black Cotton">
+                <span class="option-label"><span class="option-icon">⚫</span><span class="option-text">Black Cotton</span></span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="soil-type" value="Red Laterite">
+                <span class="option-label"><span class="option-icon">🔴</span><span class="option-text">Red Laterite</span></span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="soil-type" value="Alluvial">
+                <span class="option-label"><span class="option-icon">🟤</span><span class="option-text">Alluvial</span></span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="soil-type" value="Sandy Loam">
+                <span class="option-label"><span class="option-icon">🟡</span><span class="option-text">Sandy Loam</span></span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="soil-type" value="Clay">
+                <span class="option-label"><span class="option-icon">🪨</span><span class="option-text">Clay</span></span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="soil-type" value="Mixed">
+                <span class="option-label"><span class="option-icon">🌍</span><span class="option-text">Mixed</span></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button class="btn btn-secondary" id="prev-2">← Back</button>
+            <button class="btn btn-primary" id="next-2">Next: Crop Info →</button>
+          </div>
+        </div>
+
+        <!-- ========== STEP 3: Crop & Irrigation ========== -->
+        <div class="form-section" id="section-3">
+          <div class="section-label">🌱 Step 3 of 4 — Crops & Irrigation</div>
+          <h2 style="margin-bottom: 0.25rem;">What do you grow?</h2>
+          <p class="text-muted" style="margin-bottom: 1.5rem;">This powers your planner and advisor recommendations.</p>
+
+          <div class="form-group">
+            <label class="form-label" for="primary-crop">Primary Crop</label>
+            <select id="primary-crop" class="form-select">
+              <option value="">Select a crop...</option>
+              <option value="Wheat">🌾 Wheat</option>
+              <option value="Rice">🍚 Rice</option>
+              <option value="Sugarcane">🎋 Sugarcane</option>
+              <option value="Cotton">🌿 Cotton</option>
+              <option value="Tomato">🍅 Tomato</option>
+              <option value="Onion">🧅 Onion</option>
+              <option value="Soybean">🫘 Soybean</option>
+              <option value="Maize">🌽 Maize</option>
+              <option value="Groundnut">🥜 Groundnut</option>
+              <option value="Pulses">🌱 Pulses</option>
+              <option value="Vegetables">🥬 Mixed Vegetables</option>
+              <option value="Other">🌾 Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="secondary-crop">Secondary / Seasonal Crop <span class="text-muted">(optional)</span></label>
+            <input type="text" id="secondary-crop" class="form-control" placeholder="e.g. Onion, Chickpea">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Irrigation Method</label>
+            <div class="option-grid">
+              <label class="option-card">
+                <input type="radio" name="irrigation" value="Drip">
+                <span class="option-label"><span class="option-icon">💧</span><span class="option-text">Drip</span></span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="irrigation" value="Sprinkler">
+                <span class="option-label"><span class="option-icon">🚿</span><span class="option-text">Sprinkler</span></span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="irrigation" value="Flood">
+                <span class="option-label"><span class="option-icon">🌊</span><span class="option-text">Flood</span></span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="irrigation" value="Canal">
+                <span class="option-label"><span class="option-icon">🏞️</span><span class="option-text">Canal</span></span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="irrigation" value="Rainfed">
+                <span class="option-label"><span class="option-icon">🌧️</span><span class="option-text">Rainfed</span></span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="irrigation" value="Borewell">
+                <span class="option-label"><span class="option-icon">🔩</span><span class="option-text">Borewell</span></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button class="btn btn-secondary" id="prev-3">← Back</button>
+            <button class="btn btn-primary" id="next-3">Review & Save →</button>
+          </div>
+        </div>
+
+        <!-- ========== STEP 4: Review & Save ========== -->
+        <div class="form-section" id="section-4">
+          <div class="section-label">✅ Step 4 of 4 — Review</div>
+          <h2 style="margin-bottom: 0.25rem;">Looks good?</h2>
+          <p class="text-muted" style="margin-bottom: 1.5rem;">Review your farm details before saving.</p>
+
+          <div class="summary-grid" id="summary-grid">
+            <!-- Populated by JS -->
+          </div>
+
+          <div class="form-nav">
+            <button class="btn btn-secondary" id="prev-4">← Edit</button>
+            <button class="btn btn-primary" id="save-farm">🌱 Save My Farm</button>
+          </div>
+        </div>
+
+        <!-- ========== SUCCESS STATE ========== -->
+        <div class="success-state" id="success-state">
+          <span class="success-icon">🎉</span>
+          <h2 style="margin-bottom: 0.5rem;">Farm Profile Saved!</h2>
+          <p class="text-muted" style="margin-bottom: 2rem;">Your farm is all set. FarmPulse will now personalise your dashboard, planner and advisor alerts.</p>
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="dashboard.html" class="btn btn-primary">Go to Dashboard →</a>
+            <a href="planner.html" class="btn btn-secondary">Open Planner</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-bottom-nav">
+    <a href="index.html"><span>🏠</span> Home</a>
+    <a href="dashboard.html"><span>📊</span> Dash</a>
+    <a href="crops.html"><span>🌱</span> Crops</a>
+    <a href="about.html"><span>ℹ️</span> About</a>
+  </nav>
+
+  <script type="module" src="./js/app.js"></script>
+  <script type="module">
+    import storage from './js/storage.js';
+
+    // ---- State ----
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    // ---- Pre-fill from stored data ----
+    const existingUser = storage.getUser();
+    const existingFarm = storage.getFarm();
+    if (existingUser.name && existingUser.name !== 'Farmer') {
+      document.getElementById('farmer-name').value = existingUser.name;
+    }
+    if (existingFarm.farmName)   document.getElementById('farm-name').value = existingFarm.farmName;
+    if (existingFarm.location)   document.getElementById('farm-location').value = existingFarm.location;
+    if (existingFarm.area)       document.getElementById('farm-area').value = existingFarm.area;
+    if (existingFarm.plots)      document.getElementById('farm-plots').value = existingFarm.plots;
+    if (existingFarm.soilType) {
+      const rb = document.querySelector(`input[name="soil-type"][value="${existingFarm.soilType}"]`);
+      if (rb) rb.checked = true;
+    }
+    if (existingFarm.primaryCrop) {
+      const sel = document.getElementById('primary-crop');
+      sel.value = existingFarm.primaryCrop;
+    }
+    if (existingFarm.secondaryCrop) document.getElementById('secondary-crop').value = existingFarm.secondaryCrop;
+    if (existingFarm.irrigationType) {
+      const rb = document.querySelector(`input[name="irrigation"][value="${existingFarm.irrigationType}"]`);
+      if (rb) rb.checked = true;
+    }
+
+    // ---- Step Navigation ----
+    function goToStep(n) {
+      document.getElementById(`section-${currentStep}`).classList.remove('active');
+      currentStep = n;
+      document.getElementById(`section-${currentStep}`).classList.add('active');
+      updateStepIndicator();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateStepIndicator() {
+      for (let i = 1; i <= totalSteps; i++) {
+        const ind = document.getElementById(`step-ind-${i}`);
+        ind.classList.remove('active', 'done');
+        if (i < currentStep) ind.classList.add('done');
+        else if (i === currentStep) ind.classList.add('active');
+      }
+      for (let i = 1; i < totalSteps; i++) {
+        const line = document.getElementById(`line-${i}-${i+1}`);
+        if (line) {
+          line.classList.toggle('done', i < currentStep);
+        }
+      }
+    }
+
+    // Step 1 → 2
+    document.getElementById('next-1').addEventListener('click', () => {
+      const name = document.getElementById('farmer-name').value.trim();
+      const loc  = document.getElementById('farm-location').value.trim();
+      if (!name) { alert('Please enter your name.'); return; }
+      if (!loc)  { alert('Please enter your village / city.'); return; }
+      goToStep(2);
+    });
+
+    // Step 2 → 3
+    document.getElementById('next-2').addEventListener('click', () => {
+      const area = document.getElementById('farm-area').value;
+      const soil = document.querySelector('input[name="soil-type"]:checked');
+      if (!area || parseFloat(area) <= 0) { alert('Please enter your farm area.'); return; }
+      if (!soil) { alert('Please select your soil type.'); return; }
+      goToStep(3);
+    });
+
+    // Step 3 → 4 (review)
+    document.getElementById('next-3').addEventListener('click', () => {
+      const crop = document.getElementById('primary-crop').value;
+      const irr  = document.querySelector('input[name="irrigation"]:checked');
+      if (!crop) { alert('Please select your primary crop.'); return; }
+      if (!irr)  { alert('Please select your irrigation method.'); return; }
+      buildSummary();
+      goToStep(4);
+    });
+
+    // Back buttons
+    document.getElementById('prev-2').addEventListener('click', () => goToStep(1));
+    document.getElementById('prev-3').addEventListener('click', () => goToStep(2));
+    document.getElementById('prev-4').addEventListener('click', () => goToStep(3));
+
+    // ---- Build Summary ----
+    function buildSummary() {
+      const data = collectData();
+      const items = [
+        { label: '👤 Farmer Name',     value: data.farmerName     || '—' },
+        { label: '🏡 Farm Name',        value: data.farmName       || '—' },
+        { label: '📍 Location',         value: data.location       || '—' },
+        { label: '📐 Area',             value: data.area ? `${data.area} Acres` : '—' },
+        { label: '🪨 Soil Type',        value: data.soilType       || '—' },
+        { label: '🌱 Primary Crop',     value: data.primaryCrop    || '—' },
+        { label: '🌾 Secondary Crop',   value: data.secondaryCrop  || '—' },
+        { label: '💧 Irrigation',       value: data.irrigationType || '—' },
+      ];
+      const grid = document.getElementById('summary-grid');
+      grid.innerHTML = items.map(it => `
+        <div class="summary-item">
+          <div class="summary-item-label">${it.label}</div>
+          <div class="summary-item-value">${it.value}</div>
+        </div>
+      `).join('');
+    }
+
+    // ---- Collect all data ----
+    function collectData() {
+      return {
+        farmerName:    document.getElementById('farmer-name').value.trim(),
+        farmName:      document.getElementById('farm-name').value.trim(),
+        location:      document.getElementById('farm-location').value.trim(),
+        area:          document.getElementById('farm-area').value,
+        plots:         document.getElementById('farm-plots').value,
+        soilType:      (document.querySelector('input[name="soil-type"]:checked') || {}).value || '',
+        primaryCrop:   document.getElementById('primary-crop').value,
+        secondaryCrop: document.getElementById('secondary-crop').value.trim(),
+        irrigationType:(document.querySelector('input[name="irrigation"]:checked') || {}).value || '',
+      };
+    }
+
+    // ---- Save ----
+    document.getElementById('save-farm').addEventListener('click', () => {
+      const data = collectData();
+
+      // Save user name
+      storage.setUser({ name: data.farmerName || 'Farmer' });
+
+      // Save farm data
+      storage.setFarm({
+        farmName:      data.farmName,
+        location:      data.location,
+        area:          data.area,
+        plots:         data.plots,
+        soilType:      data.soilType,
+        primaryCrop:   data.primaryCrop,
+        secondaryCrop: data.secondaryCrop,
+        irrigationType:data.irrigationType,
+      });
+
+      // Show success
+      document.getElementById('main-card').querySelector('#steps-indicator').style.display = 'none';
+      document.getElementById(`section-${currentStep}`).classList.remove('active');
+      document.getElementById('success-state').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

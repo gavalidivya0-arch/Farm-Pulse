@@ -60,6 +60,11 @@ class StorageManager {
   getUser() {
     return this.state.user;
   }
+
+  setUser(userData) {
+    this.state.user = { ...this.state.user, ...userData };
+    this.saveState();
+  }
   
   setLocation(location) {
     this.state.user.location = location;
