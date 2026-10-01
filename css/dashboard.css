@@ -53,18 +53,25 @@
 .quick-action-btn:hover .arrow {
   transform: translateX(4px);
 }
-.dashboard-grid {
-  display: grid;
+/* Sequential Dashboard Layout */
+.dashboard-flow {
+  display: flex;
+  flex-direction: column;
   gap: var(--spacing-xl);
-  grid-template-columns: 1fr;
   margin-top: var(--spacing-xl);
 }
 
-@media (min-width: 1024px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr 360px;
+/* Bottom row: Quick Actions + Current Crop */
+.dashboard-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+}
+
+@media (min-width: 768px) {
+  .dashboard-bottom-row {
+    grid-template-columns: 1fr 1fr;
     align-items: start;
-    gap: 2rem;
   }
 }
 
@@ -168,17 +175,23 @@
   color: white;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-family: var(--font-family-heading);
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .advisor-banner p {
-  font-size: 1rem;
-  line-height: 1.7;
+  font-size: 1.05rem;
+  line-height: 1.8;
   font-weight: 400;
+  opacity: 0.9;
+  letter-spacing: 0.01em;
+  max-width: 640px;
 }
 
 .advisor-grid {
@@ -200,22 +213,26 @@
 }
 
 .advisor-item-title {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  opacity: 0.85;
-  margin-bottom: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  opacity: 0.75;
+  margin-bottom: 0.4rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  font-family: var(--font-family-base);
 }
 
 .advisor-item-value {
   font-family: var(--font-family-mono);
-  font-weight: 600;
-  font-size: 1.15rem;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: white;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 
 /* 7-Day Forecast Grid */

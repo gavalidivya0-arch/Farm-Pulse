@@ -72,45 +72,40 @@
       </div>
     </section>
 
-    <!-- Main Grid -->
-    <div class="dashboard-grid">
-      
-      <!-- Left/Main Column -->
-      <div class="dashboard-main">
-        
-        <!-- Live Metrics -->
-        <h3 class="mb-md">🌤️ Weather Overview</h3>
-        <div class="metrics-grid" id="metrics-container">
-          <div class="card metric-card skeleton-box"></div>
-          <div class="card metric-card skeleton-box"></div>
-          <div class="card metric-card skeleton-box"></div>
-          <div class="card metric-card skeleton-box"></div>
-        </div>
+    <!-- Sequential Dashboard Layout -->
+    <div class="dashboard-flow">
 
-        <!-- 7 Day Forecast -->
-        <div class="card mb-lg">
-          <h3 class="mb-md">📈 7-Day Forecast</h3>
-          <div class="forecast-scroll-wrapper">
-            <div class="forecast-grid" id="forecast-container">
-              <!-- Loading Skeletons -->
-              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
-              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
-              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
-              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
-              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
-              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
-              <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
-            </div>
+      <!-- 1. Live Metrics -->
+      <h3 class="mb-md">🌤️ Weather Overview</h3>
+      <div class="metrics-grid" id="metrics-container">
+        <div class="card metric-card skeleton-box"></div>
+        <div class="card metric-card skeleton-box"></div>
+        <div class="card metric-card skeleton-box"></div>
+        <div class="card metric-card skeleton-box"></div>
+      </div>
+
+      <!-- 2. 7-Day Forecast -->
+      <div class="card mb-xl">
+        <h3 class="mb-md">📈 7-Day Forecast</h3>
+        <div class="forecast-scroll-wrapper">
+          <div class="forecast-grid" id="forecast-container">
+            <!-- Loading Skeletons -->
+            <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
+            <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
+            <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
+            <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
+            <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
+            <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
+            <div class="forecast-day skeleton" style="height: 120px; width: 80px;"></div>
           </div>
         </div>
-        
       </div>
-      
-      <!-- Right Sidebar -->
-      <aside class="dashboard-sidebar">
-        
+
+      <!-- 3. Quick Actions + Current Crop side by side on desktop -->
+      <div class="dashboard-bottom-row">
+
         <!-- Quick Actions -->
-        <div class="card mb-lg">
+        <div class="card">
           <h3 class="mb-md">⚡ Quick Actions</h3>
           <div class="quick-actions-list">
             <a href="irrigation.html" class="quick-action-btn">
@@ -132,23 +127,23 @@
           </div>
         </div>
 
-        
         <!-- Current Crop Status -->
-        <div class="card mb-lg">
+        <div class="card">
           <div class="flex justify-between items-center mb-md">
             <h3>🌱 Current Crop</h3>
             <a href="planner.html" style="font-size: 0.85rem;">Edit</a>
           </div>
           <div id="crop-status-container">
-             <div class="text-center text-muted py-md">
-               <p>No active crop configured.</p>
-               <a href="planner.html" class="btn btn-secondary mt-sm" style="padding: 0.5rem 1rem;">Setup Farm Plan</a>
-             </div>
+            <div class="text-center text-muted py-md">
+              <p>No active crop configured.</p>
+              <a href="planner.html" class="btn btn-secondary mt-sm" style="padding: 0.5rem 1rem;">Setup Farm Plan</a>
+            </div>
           </div>
         </div>
-        
-      </aside>
+
+      </div>
     </div>
+
   </main>
 
   <!-- Mobile Bottom Nav -->
